@@ -12,8 +12,9 @@
         margin: 0;
         display: flex;
         flex-direction: column;
+        font-size: 16px; /* Ensures scalable text */
     }
-    
+
     .container {
         flex: 1;
     }
@@ -23,7 +24,7 @@
     }
 
     .gallery:hover {
-      border: 1px solid #777;
+      border: 1px solid #555; /* Improved contrast for hover state */
     }
 
     .gallery img {
@@ -32,8 +33,9 @@
     }
 
     .desc {
-      padding: 15px;
+      padding: 1rem;
       text-align: center;
+      font-size: 1rem; /* Scalable font size */
     }
 
     .social-icons a {
@@ -42,8 +44,16 @@
       text-decoration: none;
     }
 
+    .social-icons a:focus, 
     .social-icons a:hover {
-      color: #007bff; /* Add hover effect */
+      color: #0056b3; /* High-contrast hover color */
+      outline: 2px solid #0056b3; /* Visible focus state */
+    }
+
+    .navbar-nav .nav-link:focus, 
+    .navbar-nav .nav-link:hover {
+      color: #00bcd4; /* High-contrast hover color */
+      outline: 2px solid #00bcd4; /* Visible focus state */
     }
   </style>
 </head>
@@ -53,7 +63,7 @@
   <div class="container-fluid">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link text-white" href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project.">Contact Me</a>
+        <a class="nav-link text-white" href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project." aria-label="Email Ethan">Contact Me</a>
       </li>
     </ul>
   </div>
@@ -62,41 +72,41 @@
 <div class="container mt-4">
   <div class="row">
     <div class="col-sm-4">
-      <img src="Assets/Profilebw.png" class="rounded-circle d-block img-fluid mx-auto mb-4" style="max-width: 70%; max-height: 70%;" alt="Very Handsome Profile Picture of Ethan">
+      <img src="Assets/Profilebw.png" class="rounded-circle d-block img-fluid mx-auto mb-4" style="max-width: 70%; max-height: 70%;" alt="Profile picture of Ethan">
       <h5 class="mb-4">Hi, I'm Ethan. I'm a Web Developer from Eugene, Oregon.</h5>
       <p>I enjoy learning about, designing, and building websites, applications, and games. Minimal, intuitive, and highly optimized is always the goal.</p>
     </div>
     <div class="col-sm-8">
       <div class="row g-4">
-        <!-- Your content here -->
+        <!-- Accessible gallery -->
         <div class="col-lg-3 col-md-6 col-sm-12">
-          <a href="https://edoubleu.github.io/rec_sports_budget_calc/" target="_blank">
+          <a href="https://edoubleu.github.io/rec_sports_budget_calc/" target="_blank" aria-label="Visit Sports League Budget Calculator project">
             <div class="gallery">
-              <img src="Assets/calc.PNG" class="img-fluid" alt="Gallery Image 1">
+              <img src="Assets/calc.PNG" class="img-fluid" alt="Screenshot of the Sports League Budget Calculator">
               <div class="desc">Sports League Budget Calculator</div>
             </div>
           </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12">
-          <a href="https://edoubleu.github.io/Responsive_Dashboard_Template/" target="_blank">
+          <a href="https://edoubleu.github.io/Responsive_Dashboard_Template/" target="_blank" aria-label="Visit Responsive Dashboard Design project">
             <div class="gallery">
-              <img src="Assets/dashboard.PNG" class="img-fluid" alt="Gallery Image 2">
+              <img src="Assets/dashboard.PNG" class="img-fluid" alt="Screenshot of the Responsive Dashboard Design">
               <div class="desc">Responsive Dashboard Design</div>
             </div>
           </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12">
-          <a href="https://edoubleu.github.io/Gerburt-JS-RPG-Battle/" target="_blank">
+          <a href="https://edoubleu.github.io/Gerburt-JS-RPG-Battle/" target="_blank" aria-label="Visit Gerbert Battle Mini-Game project">
             <div class="gallery">
-              <img src="Assets/gerb.PNG" class="img-fluid" alt="Gallery Image 3">
+              <img src="Assets/gerb.PNG" class="img-fluid" alt="Screenshot of the Gerbert Battle Mini-Game">
               <div class="desc">Gerbert Battle Mini-Game</div>
             </div>
           </a>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-          <a href="https://edoubleu.github.io/ImperialAssaultDiceRoller/" target="_blank">
+          <a href="https://edoubleu.github.io/ImperialAssaultDiceRoller/" target="_blank" aria-label="Visit Imperial Assault Dice Roller project">
             <div class="gallery">
-              <img src="Assets/imp.PNG" class="img-fluid" alt="Gallery Image 4">
+              <img src="Assets/imp.PNG" class="img-fluid" alt="Screenshot of the Imperial Assault Dice Roller">
               <div class="desc">Imperial Assault Dice Roller</div>
             </div>
           </a>
@@ -110,20 +120,17 @@
 <div class="mt-5 p-4 bg-dark text-white text-center">
   <p>Connect with me:</p>
   <div class="social-icons">
-    <!-- StoryGraph -->
-    <a href="https://app.thestorygraph.com/" target="_blank">
+    <!-- Accessible Social Media Links -->
+    <a href="https://app.thestorygraph.com/" target="_blank" aria-label="Visit StoryGraph profile">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/open-book.png" alt="StoryGraph Icon" width="24" height="24">
     </a>
-    <!-- BlueSky Social -->
-    <a href="https://bsky.app/" target="_blank">
+    <a href="https://bsky.app/" target="_blank" aria-label="Visit BlueSky Social profile">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/cloud.png" alt="BlueSky Social Icon" width="24" height="24">
     </a>
-    <!-- LinkedIn -->
-    <a href="https://linkedin.com/in/yourprofile" target="_blank">
+    <a href="https://linkedin.com/in/yourprofile" target="_blank" aria-label="Visit LinkedIn profile">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/linkedin.png" alt="LinkedIn Icon" width="24" height="24">
     </a>
-    <!-- GitHub -->
-    <a href="https://github.com/yourusername" target="_blank">
+    <a href="https://github.com/yourusername" target="_blank" aria-label="Visit GitHub profile">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/github.png" alt="GitHub Icon" width="24" height="24">
     </a>
   </div>
