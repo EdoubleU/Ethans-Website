@@ -18,6 +18,17 @@
     .container {
         flex: 1;
     }
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .tech-stack img {
+      width: 50px;
+      height: auto;
+    }
 
     .gallery {
       border: 1px solid #ccc;
@@ -73,9 +84,20 @@
   <div class="row">
     <div class="col-sm-4">
       <img src="Assets/Profilebw.png" class="rounded-circle d-block img-fluid mx-auto mb-4" style="max-width: 70%; max-height: 70%;" alt="Profile picture of Ethan">
+      
       <h5 class="mb-4">Hi, I'm Ethan. I'm a Web Developer from Eugene, Oregon.</h5>
-      <p>I enjoy learning about, designing, and building websites, applications, and games. Minimal, intuitive, and highly optimized is always the goal.</p>
+      <p class='mb-4'>I enjoy learning about, designing, and building websites, applications, and games. Minimal, intuitive, and highly optimized is always the goal.</p>
+
+      <div class="tools-container mb-4 d-block img-fluid mx-auto">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original-wordmark.svg" width="36" height="36" alt="HTML5">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original-wordmark.svg" width="36" height="36" alt="CSS3">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="36" height="36" alt="JavaScript">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg" width="36" height="36" alt="React">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" width="36" height="36" alt="Node.js">
+      </div>
+      
     </div>
+    
     <div class="col-sm-8">
       <div class="row g-4">
         <!-- Accessible gallery -->
