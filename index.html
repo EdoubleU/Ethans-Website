@@ -1,190 +1,153 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <title>ethanwing.me</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <style>
-    html, body {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        font-size: 16px; /* Ensures scalable text */
-    }
-
-    .container {
-        flex: 1;
-    }
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .tech-stack img {
-      width: 50px;
-      height: auto;
-    }
-
-    .gallery {
-      border: 1px solid #ccc;
-    }
-
-    .gallery:hover {
-      border: 1px solid #555; /* Improved contrast for hover state */
-    }
-
-    .gallery img {
-      width: 100%;
-      height: auto;
-    }
-
-    .desc {
-      padding: 1rem;
-      text-align: center;
-      font-size: 1rem; /* Scalable font size */
-    }
-
-    .social-icons a {
-      color: white;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-
-    .social-icons a:focus, 
-    .social-icons a:hover {
-      color: #0056b3; /* High-contrast hover color */
-      outline: 2px solid #0056b3; /* Visible focus state */
-    }
-
-    .navbar-nav .nav-link:focus, 
-    .navbar-nav .nav-link:hover {
-      color: #00bcd4; /* High-contrast hover color */
-      outline: 2px solid #00bcd4; /* Visible focus state */
-    }
-    .gallery {
-      
-    }
-
-    .purp{
-    background-color: purple;
- }
-  </style>
-</head>
-<body>
-
-<nav class="navbar navbar-expand-sm bg-dark text-white">
-  <div class="m-4">
-    <H1 ml-2 >ethanwing.me</H1>
-  </div>
-  <div class="container-fluid justify-content-end">
-    <ul class="navbar-nav">
-      <li class="nav-item ">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>Ethan Wing</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto&display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body class="roboto-regular">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-description flex flex-col align-center">
+                    <figure class="header-img">
+                        <figcaption class="playfair-display">
+                            <span></span>
+                        </figcaption>
+                        <img srcset="Profilebw.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="/top-homepage/main-480_x_717.webp" alt="Ethan Wing"/>
+                    </figure>
+                    <h1 class="playfair-display">Hi, I'm Ethan. </h1>
     
-      </li>
-    </ul>
-  </div>
-</nav>
+                    <p> I enjoy learning about, designing, and building websites, applications, and games. Minimal, intuitive, and highly optimized is always the goal. Oh yeah, I also run basketball leagues. I primarily work with:<span class="coding">HTML, CSS, Javascript, React and Node.js</span></p>
+                    <div class="links flex">
 
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-sm-4">
-      <img src="Assets/Profilebw.png" class="rounded-circle d-block img-fluid mx-auto mb-4" style="max-width: 70%; max-height: 70%;" alt="Profile picture of Ethan">
-      
-      <h5 class="mb-4"><h5>Hi, I'm Ethan.</h5>
-      <p class ="mb-4"> I'm a Web Developer from Eugene, Oregon.</p>
-      <p class="mb-4">I enjoy learning about, designing, and building websites, applications, and games. Minimal, intuitive, and highly optimized is always the goal. Oh yeah, I also run basketball leagues.</p>
+                        <a href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project" target="_blank" rel="noopener noreferrer">
+                            <img src="email-outline.svg" alt="Email Ethan" class="icon"/>
+                        </a>
 
-      <div class="tools-container mb-5 d-block img-fluid mx-auto">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original-wordmark.svg" width="36" height="36" alt="HTML5">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original-wordmark.svg" width="36" height="36" alt="CSS3">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="36" height="36" alt="JavaScript">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg" width="36" height="36" alt="React">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" width="36" height="36" alt="Node.js">
-        
-      </div>
-      <div class=" mb-4 d-grid btn-dark purp gallery rounded ">
-      <button type="button lg" class="btn btn-md btn-block  ">
-        <a class="nav-link text-light" href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project." aria-label="Email Ethan">Contact Me</a>
-        </button>
-      </div>
-      
-    </div>
-    
-    <div class="col-sm-8">
-      <div class="row g-4">
-        <!-- Accessible gallery -->
-        <div class="col-lg-3 col-md-6 col-sm-12">
-          <a href="https://edoubleu.github.io/rec_sports_budget_calc/" class="text-decoration-none"  target="_blank" aria-label="Visit Sports League Budget Calculator project">
-            <div class="gallery">
-              <img src="Assets/calc.PNG" class="img-fluid" alt="Screenshot of the Sports League Budget Calculator">
-              <div class="desc  d-grid">
-                <button type="button" class="btn btn-dark purp btn-md text-light">Sports Budget Calculator</button>
-              </div>
+                        <a href="https://github.com/EdoubleU" target="_blank" rel="noopener noreferrer">
+                            <img src="github.svg" alt="GitHub" class="icon"/>
+                        </a>
+                        <a href="https://linkedin.com/in/ethan-wing-333647296" target="_blank" rel="noopener noreferrer">
+                            <img src="linkedin.svg" alt="Linkedin" class="icon"/>
+                        </a>
+                     
+                        </a>
+                    </div>
+                </div>
             </div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 ">
-          <a href="https://edoubleu.github.io/Responsive_Dashboard_Template/" class="text-decoration-none" target="_blank" aria-label="Visit Responsive Dashboard Design project">
-            <div class="gallery">
-              <img src="Assets/dashboard.PNG" class="img-fluid" alt="Screenshot of Responsive Dashboard Design">
-              <div class="desc d-grid ">
-                <button type="button" class="btn btn-dark purp btn-md text-light">Responsive Dashboard </button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
-          <a href="https://edoubleu.github.io/Gerburt-JS-RPG-Battle/" class="text-decoration-none"  target="_blank" aria-label="Visit Gerbert Battle Mini-Game project">
-            <div class="gallery">
-              <img src="Assets/gerb.PNG" class="img-fluid" alt="Screenshot of the Gerbert Battle Mini-Game">
-              <div class="desc desc d-grid">
-                <button type="button" class="btn btn-dark purp btn-md text-light"> Gerbert Battle Mini-Game</button>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-          <a href="https://edoubleu.github.io/ImperialAssaultDiceRoller/" class="text-decoration-none"  target="_blank" aria-label="Visit Imperial Assault Dice Roller project">
-            <div class="gallery">
-              <img src="Assets/imp.PNG" class="img-fluid" alt="Screenshot of the Imperial Assault Dice Roller">
-              <div class="desc desc d-grid">
-                <button type="button" class="btn btn-dark purp btn-md text-light">Star Wars Dice Roller</button>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </header>
+        <main class="main">
+            <h2 class="playfair-display">My work</h2>
+            <div class="all-projects">
+                <div class="project flex flex-col">
+                    <div class="photo-container flex align-center justify-center">
+                        <p class="playfair-display"><img srcset="calc.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="/top-homepage/main-480_x_717.webp" alt="Sports League Calculator"/></p>
+                    </div>
+                    <div class="project-description">
+                        <div class="flex justify-between align-center">
+                            <h3 class="playfair-display">Sports League Budget Calculator</h3>
+                            <a href="https://edoubleu.github.io/rec_sports_budget_calc/" target="_blank" rel="noopener noreferrer" class="github flex align-center">
 
-<!-- Footer -->
-<div class="mt-5 p-4 bg-dark text-white text-center">
-  <p>Connect with me:</p>
-  <div class="social-icons">
-    <!-- Accessible Social Media Links -->
-    <a href="https://app.thestorygraph.com/profile/edoubleu" target="_blank" aria-label="Visit StoryGraph profile">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/open-book.png" alt="StoryGraph Icon" width="24" height="24">
-    </a>
-    <a href="https://bsky.app/profile/edoubleu.bsky.social" target="_blank" aria-label="Visit BlueSky Social profile">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/cloud.png" alt="BlueSky Social Icon" width="24" height="24">
-    </a>
-    <a href="https://linkedin.com/in/ethan-wing-333647296" target="_blank" aria-label="Visit LinkedIn profile">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/linkedin.png" alt="LinkedIn Icon" width="24" height="24">
-    </a>
-    <a href="https://github.com/edoubleu" target="_blank" aria-label="Visit GitHub profile">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/github.png" alt="GitHub Icon" width="24" height="24">
-    </a>
-  </div>
-</div>
+                            </a>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="project flex flex-col">
+                    <div class="photo-container flex align-center justify-center">
+                        <p class="playfair-display"><img srcset="dashboard.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="/top-homepage/main-480_x_717.webp" alt="Link to Responsive Dashboard Design"/></p>
+                    </div>
+                    <div class="project-description">
+                        <div class="flex justify-between align-center">
+                            <h3 class="playfair-display">Responsive Dashboard Design</h3>
+                            <a href="https://edoubleu.github.io/Responsive_Dashboard_Template/" target="_blank" rel="noopener noreferrer" class="github flex align-center">
 
-</body>
-</html>
+                            </a>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="project flex flex-col">
+                    <div class="photo-container flex align-center justify-center">
+                        <p class="playfair-display"><img srcset="imp.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="/top-homepage/main-480_x_717.webp" alt="Dice Roller"/></p>
+                    </div>
+                    <div class="project-description">
+                        <div class="flex justify-between align-center">
+                            <h3 class="playfair-display">Board Game Dice Roller</h3>
+                            <a href="https://edoubleu.github.io/ImperialAssaultDiceRoller/" target="_blank" rel="noopener noreferrer" class="github flex align-center">
 
-</body>
+                            </a>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="project flex flex-col">
+                    <div class="photo-container flex align-center justify-center">
+                        <p class="playfair-display"><img srcset="libapp.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px, (max-height: 239px)" src="/top-homepage/main-480_x_717.webp" alt="Digital Library UI"/></p>
+                    </div>
+                    <div class="project-description">
+                        <div class="flex justify-between align-center">
+                            <h3 class="playfair-display">Digital Library Interface</h3>
+                            <a href="https://edoubleu.github.io/libapp/" target="_blank" rel="noopener noreferrer" class="github flex align-center">
+
+                            </a>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="project flex flex-col">
+                    <div class="photo-container flex align-center justify-center">
+                        <p class="playfair-display"><img srcset="gerb.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="/top-homepage/main-480_x_717.webp" alt="RPG Battle"/></p>
+                    </div>
+                    <div class="project-description">
+                        <div class="flex justify-between align-center">
+                            <h3 class="playfair-display">Gerbert Mini-Battle Deluxe</h3>
+                            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="github flex align-center">
+
+                            </a>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="project flex flex-col">
+                    <div class="photo-container flex align-center justify-center">
+                        <p class="playfair-display"><img srcset="qr.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="/top-homepage/main-480_x_717.webp" alt="QR Code Project"/></p>
+                    </div>
+                    <div class="project-description">
+                        <div class="flex justify-between align-center">
+                            <h3 class="playfair-display">QR Code Generator</h3>
+                            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="github flex align-center">
+
+                            </a>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer flex flex-col justify-between">
+            <div>
+                </div>
+                <div class="links flex">
+                    <a href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project" target="_blank" rel="noopener noreferrer">
+                        <img src="email-outline light.svg" alt="Email Ethan" class="icon"/>
+
+                    <a href="https://github.com/EdoubleU" target="_blank" rel="noopener noreferrer">
+                        <img src="github-light.svg" alt="GitHub" class="icon"/>
+                    </a>
+                    <a href="https://linkedin.com/in/ethan-wing-333647296" target="_blank" rel="noopener noreferrer">
+                        <img src="linkedin-light.svg" alt="Linkedin" class="icon"/>
+                    </a>
+                    
+                    </a>
+                </div>
+                
+            </div>
+            
+        </footer>
+    </body>
 </html>
