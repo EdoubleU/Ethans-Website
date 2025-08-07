@@ -1,80 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ethan Wing</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto&display=swap" rel="stylesheet" />
-
-  <!-- Bootstrap (CDN version) -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ethan Wing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="file:///C|/Users/ethan/AppData/Roaming/Adobe/Dreamweaver 2021/en_US/Configuration/Temp/Assets/eam1533.tmp/css/bootstrap-4.4.1.css" rel="stylesheet" type="text/css">
 </head>
-<body class="roboto-regular">
+  <body class="roboto-regular">
+    <header class="header">
+      <div class="header-content">
+        <div class="header-description flex flex-col align-center">
+          <figure class="header-img">
+            <figcaption class="playfair-display"><span></span></figcaption>
+            <img srcset="Profilebw.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="Profilebw.png" alt="Ethan Wing" />
+          </figure>
+          <h1 class="playfair-display">Hi, I'm Ethan.</h1>
+          <p>
+            I enjoy learning about, designing, and building things. This includes web applications and games.
+            Minimal, inexpensive and intuitive is always the goal. 
+            I spend the rest of my time building community sports leagues, coaching youth basketball and improving various systems and processes.
+            I primarily work with: <span class="coding">HTML, CSS, JavaScript, Construct 3, Adobe Suite</span>
+          </p>
+                 <div class="links flex">
+            <a href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project" target="_blank" rel="noopener noreferrer">
+              <img src="email-outline.svg" alt="Email Ethan" class="icon" />
+            </a>
+            <a href="https://github.com/EdoubleU" target="_blank" rel="noopener noreferrer">
+              <img src="github.svg" alt="GitHub" class="icon" />
+            </a>
+                     <a>
+                     <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
 
-  <header class="container text-center py-5">
-    <!-- Profile Image -->
-    <div class="row justify-content-center mb-4">
-      <div class="col-12">
-        <img src="Profilebw.png"
-             class="img-fluid rounded-circle"
-             alt="Ethan Wing"
-             style="max-width: 200px;" />
-      </div>
-    </div>
-
-    <!-- Text Content -->
-    <div class="row justify-content-center mb-4">
-      <div class="col-md-8 text-left">
-        <h1 class="playfair-display text-center">Hi, I'm Ethan.</h1>
-        <p>
-          I enjoy learning about, designing, and building things. This includes web applications and games.
-          Minimal, inexpensive and intuitive is always the goal.
-          I spend the rest of my time building community sports leagues, coaching youth basketball and improving various systems and processes.
-          I primarily work with: <span class="coding">HTML, CSS, JavaScript, Construct 3, Adobe Suite</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- Icon Row -->
-    <div class="row justify-content-center mb-4">
-      <div class="col-auto">
-        <a href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project" target="_blank" rel="noopener noreferrer">
-          <img src="email-outline.svg" alt="Email Ethan" class="icon mx-2" style="width: 40px;" />
-        </a>
-        <a href="https://github.com/EdoubleU" target="_blank" rel="noopener noreferrer">
-          <img src="github.svg" alt="GitHub" class="icon mx-2" style="width: 40px;" />
-        </a>
-        <stripe-buy-button
-          buy-button-id="buy_btn_1RtGqcH0U26HqGh79OJpYIJY"
-          publishable-key="pk_live_51NOPY7H0U26HqGh7bPNMENhhyUkoSUUCRbDIP5PDeSFTBv7hNtTWWWb9cruoUS7QS9KENhdhp8UiaPFJJgXVfx7I005vX7j7MO">
-        </stripe-buy-button>
-      </div>
-    </div>
-
-    <!-- Our Dreadling Image Link -->
-    <div class="row justify-content-center">
+<stripe-buy-button
+  buy-button-id="buy_btn_1RtGqcH0U26HqGh79OJpYIJY"
+  publishable-key="pk_live_51NOPY7H0U26HqGh7bPNMENhhyUkoSUUCRbDIP5PDeSFTBv7hNtTWWWb9cruoUS7QS9KENhdhp8UiaPFJJgXVfx7I005vX7j7MO"
+>
+</stripe-buy-button>
+                     </a>
+          </div>
+        </div>
+     <div class="row justify-content-center">
       <div class="col-md-6">
         <a href="https://store.steampowered.com/app/3482370/Our_Dreadling/" target="_blank">
           <img src="mydread.jpg" class="img-fluid img-thumbnail" alt="Our Dreadling on Steam" />
         </a>
       </div>
     </div>
-  </header>
-
-  <footer class="footer text-center py-3">
-    <!-- Optional footer content -->
-  </footer>
-
-  <!-- Stripe Script -->
-  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-
-</body>
+      </div>
+    </header>
+    <footer class="footer flex flex-col justify-between">
+    </footer>
+  </body>
 </html>
