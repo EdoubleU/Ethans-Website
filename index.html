@@ -1,59 +1,73 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ethan Wing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-    <link href="file:///C|/Users/ethan/AppData/Roaming/Adobe/Dreamweaver 2021/en_US/Configuration/Temp/Assets/eam1533.tmp/css/bootstrap-4.4.1.css" rel="stylesheet" type="text/css">
-</head>
-  <body class="roboto-regular">
-    <header class="header">
-      <div class="header-content">
-        <div class="header-description flex flex-col align-center">
-          <figure class="header-img">
-            <figcaption class="playfair-display"><span></span></figcaption>
-            <img srcset="Profilebw.png" sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px" src="Profilebw.png" alt="Ethan Wing" />
-          </figure>
-          <h1 class="playfair-display">Hi, I'm Ethan.</h1>
-          <p>
-          <p></p>
-            I enjoy learning about, designing, and building things. This includes web applications and games.
-            Minimal, inexpensive and intuitive is always the goal. 
-            I spend the rest of my time building community sports leagues, coaching youth basketball and improving various systems and processes.
-            I primarily work with: <span class="coding">HTML, CSS, JavaScript, Construct 3, Adobe Suite</span>
-          </p>
-                 <div class="links flex">
-            <a href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project" target="_blank" rel="noopener noreferrer">
-              <img src="email-outline.svg" alt="Email Ethan" class="icon" />
-            </a>
-            <a href="https://github.com/EdoubleU" target="_blank" rel="noopener noreferrer">
-              <img src="github.svg" alt="GitHub" class="icon" />
-            </a>
-                     <a>
-                     <script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Ethan Wing</title>
 
-<stripe-buy-button
-  buy-button-id="buy_btn_1RtGqcH0U26HqGh79OJpYIJY"
-  publishable-key="pk_live_51NOPY7H0U26HqGh7bPNMENhhyUkoSUUCRbDIP5PDeSFTBv7hNtTWWWb9cruoUS7QS9KENhdhp8UiaPFJJgXVfx7I005vX7j7MO"
->
-</stripe-buy-button>
-                     </a>
-          </div>
-        </div>
-          <div class= "links flex">
-      <a href="https://store.steampowered.com/app/3482370/Our_Dreadling/"><img src="mydread.jpg" class="img-fluid img-thumbnail" alt="Placeholder image"></a>
-          </div>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap CDN -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Your custom styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="roboto-regular">
+
+  <header class="container py-5">
+    <div class="text-center">
+      <figure>
+        <img src="Profilebw.png"
+             class="img-fluid rounded-circle"
+             alt="Ethan Wing"
+             style="max-width: 200px;" />
+        <figcaption class="playfair-display mt-3"><h1>Hi, I'm Ethan.</h1></figcaption>
+      </figure>
+
+      <p class="mt-3">
+        I enjoy learning about, designing, and building things—especially web applications and games.
+        Minimal, inexpensive, and intuitive is always the goal.
+        I also build community sports leagues, coach youth basketball, and improve systems and processes.
+        <br />
+        <strong>Tools:</strong> <span class="coding">HTML, CSS, JavaScript, Construct 3, Adobe Suite</span>
+      </p>
+
+      <!-- Icons Row -->
+      <div class="d-flex justify-content-center align-items-center flex-wrap my-4 gap-3">
+        <a href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project" target="_blank" rel="noopener noreferrer">
+          <img src="email-outline.svg" alt="Email Ethan" class="icon mx-2" style="width: 40px;" />
+        </a>
+        <a href="https://github.com/EdoubleU" target="_blank" rel="noopener noreferrer">
+          <img src="github.svg" alt="GitHub" class="icon mx-2" style="width: 40px;" />
+        </a>
+        <stripe-buy-button
+          buy-button-id="buy_btn_1RtGqcH0U26HqGh79OJpYIJY"
+          publishable-key="pk_live_51NOPY7H0U26HqGh7bPNMENhhyUkoSUUCRbDIP5PDeSFTBv7hNtTWWWb9cruoUS7QS9KENhdhp8UiaPFJJgXVfx7I005vX7j7MO">
+        </stripe-buy-button>
       </div>
-    </header>
-    <footer class="footer flex flex-col justify-between">
-    </footer>
-  </body>
+
+      <!-- Game Link/Image -->
+      <div class="my-4">
+        <a href="https://store.steampowered.com/app/3482370/Our_Dreadling/" target="_blank">
+          <img src="mydread.jpg" class="img-fluid img-thumbnail" alt="Our Dreadling" style="max-width: 100%; height: auto;" />
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <footer class="footer text-center py-3">
+    <!-- Add any footer content if needed -->
+  </footer>
+
+  <!-- Stripe script -->
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
+</body>
 </html>
+
 
