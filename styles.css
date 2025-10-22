@@ -59,6 +59,7 @@ html {
     font-family: Playfair Display,serif;
     font-optical-sizing: auto;
     font-style: normal
+    
 }
 
 .coding {
@@ -285,7 +286,8 @@ html {
     .header-img>img {
         width: 400px;
         height: 500px;
-        margin-top: -40px
+        margin-top: -40px;
+        filter: grayscale(100%);
     }
 
     .icon {
@@ -359,6 +361,20 @@ html {
 
     .header:before {
         height: 200px;
+        width: 100%
+    }
+   ;
+}
+.image-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(100%);
+    border: 2px solid black;
+     overflow: hidden;
+
+}
+
         width: 100%
     }
 }
