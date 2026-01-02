@@ -1,112 +1,75 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Ethan Wing</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
 
-  <!-- Bootstrap CSS (replace local file with CDN for consistency) -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-
-  <!-- Your Custom Styles -->
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="roboto-regular">
 
-  <header class="container text-center py-5">
-    <!-- Profile Image -->
-   <div class="d-flex justify-content-center mb-4">
-  <img 
-    srcset="Profilebw.png"
-    sizes="(min-width: 1200px) 1200px, (min-width: 768px) 768px, (max-width: 767px) 480px"
-    src="Profilebw.png"
-    alt="Ethan Wing"
-    class="img-fluid rounded-circle "
-    style="max-width: 200px;"
-  />
-</div>
+<body>
+  <header class="site-header">
+    <figure class="profile">
+      <img
+        src="Profilebw.png"
+        alt="Portrait of Ethan Wing"
+        width="200"
+        height="200"
+        loading="eager"
+      >
+    </figure>
 
-    <!-- Intro Heading -->
-    <h1 class="playfair-display mb-4">Hi, I'm Ethan.</h1>
-
-    <!-- Three Columns -->
-    <div class="row text-left
-    ">
-      <div class="col-12 col-md-4 mb-4 ">
-  <h3>Sports League Admin</h3>
-  <p>
-    I have dedicated over 25 years to building and managing sports and recreational programs, with a focus on developing community-wide leagues, classes, and tournaments that bring people together through play, competition, and teamwork. I've managed programs with budgets as large as $4.2 million.
-  </p>
-     <div class="image-wrapper d-flex justify-content-center mb-4 ">
-<img 
-    src="admin.png"
-    alt="Ethan Wing"
-    class="img-fluid w-100"
-  />
-</div>
-</div>
-
-<div class="col-12 col-md-4 mb-4">
-  <h3>Basketball Coaching</h3>
-  <p>
-    I have spent 20 years coaching basketball for players ranging from 5-year-olds to highly skilled varsity athletes. I take an ecological approach to player development that emphasizes context, adaptability, and decision-making. My current coaching roles include Head Coach for the South Side Select 7th Grade Club Team and Assistant Coach at South Eugene High School. 
-  </p>
-  <div class="image-wrapper d-flex justify-content-center mb-4 ">
-<img 
-    src="coach.png"
-    alt="Ethan Wing"
-    class="img-fluid w-100"
-  />
-  </div>
-</div>
-
-<div class="col-12 col-md-4 mb-4">
-  <h3>Game Development</h3>
-  <p>
-    I enjoy learning about, designing, and building games and apps. Minimal, inexpensive, and intuitive is always the goal. I primarily work with: HTML, CSS, JavaScript, Construct and currently own and operate Panopticorp. Games.
-  </p>
-  <a href="https://store.steampowered.com/app/3482370/Our_Dreadling/" target="_blank">
-          <img src="mydread.jpg" class="img-fluid img-thumbnail" alt="Our Dreadling on Steam" />
-</div>
-
-      </div>
-    </div>
-
-  
-
-    <!-- Links / Icons -->
-    <div class="d-flex justify-content-center mt-4">
-      <a href="mailto:ethanwing20@gmail.com?subject=Hire%20Me&body=I%20would%20like%20to%20hire%20you%20for%20a%20project" target="_blank" rel="noopener noreferrer" class="mx-2">
-        <img src="email-outline.svg" alt="Email Ethan" class="icon" />
-      </a>
-      <a href="https://github.com/EdoubleU" target="_blank" rel="noopener noreferrer" class="mx-2">
-        <img src="github.svg" alt="GitHub" class="icon" />
-      </a>
-      <div class="mx-2">
-        <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-        <stripe-buy-button
-          buy-button-id="buy_btn_1RtGqcH0U26HqGh79OJpYIJY"
-          publishable-key="pk_live_51NOPY7H0U26HqGh7bPNMENhhyUkoSUUCRbDIP5PDeSFTBv7hNtTWWWb9cruoUS7QS9KENhdhp8UiaPFJJgXVfx7I005vX7j7MO">
-        </stripe-buy-button>
-      </div>
-    </div>
+    <h1>Hi, I’m Ethan.</h1>
   </header>
 
+  <main class="content">
+    <section class="card">
+      <h2>Sports League Admin</h2>
+      <p>
+        Over 25 years building and managing sports and recreation programs,
+        including multi-million dollar budgets.
+      </p>
+      <img src="admin.png" alt="Sports administration illustration" loading="lazy">
+    </section>
 
+    <section class="card">
+      <h2>Basketball Coaching</h2>
+      <p>
+        20 years coaching athletes from youth to varsity using an ecological
+        development approach.
+      </p>
+      <img src="coach.png" alt="Basketball coaching illustration" loading="lazy">
+    </section>
 
-  <footer class="footer text-center py-3">
-    <!-- Add footer content if needed -->
+    <section class="card">
+      <h2>Game Development</h2>
+      <p>
+        Designing minimal, intuitive games using HTML, CSS, JavaScript, and Construct.
+      </p>
+      <a
+        href="https://store.steampowered.com/app/3482370/Our_Dreadling/"
+        target="_blank"
+        rel="noopener"
+      >
+        <img src="mydread.jpg" alt="Our Dreadling on Steam" loading="lazy">
+      </a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <nav aria-label="Contact links">
+      <a href="mailto:ethanwing20@gmail.com" aria-label="Email Ethan">
+        <img src="email-outline.svg" alt="">
+      </a>
+      <a href="https://github.com/EdoubleU" aria-label="Ethan's GitHub">
+        <img src="github.svg" alt="">
+      </a>
+    </nav>
   </footer>
-
 </body>
-</html>
-
-    </footer>
-  </body>
 </html>
