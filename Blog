@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Blog</title>
+  <link rel="stylesheet" href="/style2.css">
+</head>
+<body>
+<a href="https://ethanwing.me">Home</a>
+<section class="blog">
+
+  <article class="blog-post" id="first-blog-post">
+    <details open>
+      <summary class="post-title">Welcome to the Blog</summary>
+      <div class="post-content">
+        <p>I might use this for various musings in the future or it may sit here empty. </p>
+      </div>
+    </details>
+  </article>
+
+  <!--<article class="blog-post" id="second-blog-post">
+    <details>
+      <summary class="post-title">Second Blog Post</summary>
+      <div class="post-content">
+        <p>This post starts collapsed.</p>
+      </div>
+    </details>
+  </article>
+
+  <article class="blog-post" id="third-blog-post">
+    <details>
+      <summary class="post-title">Third Blog Post</summary>
+      <div class="post-content">
+        <p>Another post.</p>
+      </div>
+    </details>
+  </article>
+
+</section>
+
+  </section>
+
+  <script src="/collapse.js"></script>
+</body>
+</html>
