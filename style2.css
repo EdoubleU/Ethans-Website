@@ -1,0 +1,41 @@
+.blog {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.blog-post {
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+}
+
+/* Title */
+.post-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.post-title::-webkit-details-marker {
+  display: none;
+}
+
+.post-title::after {
+  content: " +";
+}
+
+details[open] .post-title::after {
+  content: " −";
+}
+
+/* Animated content wrapper */
+.post-content {
+  overflow: hidden;
+  line-height: 1.6;
+}
+
+/* Spacing after open */
+details[open] .post-content {
+  margin-top: 1rem;
+}
