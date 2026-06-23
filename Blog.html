@@ -2,63 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Blog</title>
-  <link rel="stylesheet" href="/style2.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#14181F" />
+  <meta name="description" content="Ethan Wing's blog — notes on sports ops, coaching, and game design." />
+  <title>Blog — Ethan Wing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<a href="https://ethanwing.me">Home</a>
-<section class="blog">
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <article class="blog-post" id="first-blog-post">
-    <details open>
-      <summary class="post-title">NBA Awards Should Reward Greatness, Not Attendance [A Possible Solution]</summary>
-      <p>1/7/2026</p>
-      <div class="post-content">
-<p>The NBA’s 65-game minimum feels less like a solution and more like a workaround that accidentally became policy. It was meant to rein in load management. What it’s actually done is turn awards into a compliance exercise.
-</p>
-<P>
-The issue isn’t that availability shouldn’t matter. It’s that the league chose to treat it as a switch instead of a spectrum. Sixty-five games earns full consideration; sixty-four wipes out an entire body of work. That disconnect is obvious to anyone who’s watched an MVP or DPOY race unfold in real time, because voters have never evaluated seasons that way. They already account for missed games... the rule just does it clumsily and all at once.
+  <header class="site-nav">
+    <a class="brand" href="https://ethanwing.me" aria-label="Back to home">EW</a>
+    <nav aria-label="Primary">
+      <a href="https://ethanwing.me">Home</a>
+    </nav>
+  </header>
 
-</p>
-<p>
-There’s a cleaner fix. Give players a 10-game grace period, roughly the amount of time we’ve collectively accepted stars will miss in a normal season. After that, subtract 1 percent from a player’s total voting points for every additional missed game. No disqualifications. No cliffs. No pretending that missing 14 games and missing 34 games are the same thing.
+  <main id="main">
+    <section class="blog-hero">
+      <p class="eyebrow">Field Notes</p>
+      <h1>Blog</h1>
+      <p>Notes on sports ops, coaching, and game design.</p>
+    </section>
 
-Most outcomes wouldn’t change. The conversations would. Fewer debates about eligibility. Fewer performative appearances. Fewer great seasons erased by bad timing. In fact, this change likely wouldn’t alter any MVP result from the past decade. The only race it meaningfully tightens is 2022–23, when Joel Embiid played 66 games and Nikola Jokić played 69 and even then, the winner stays the same.
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 240 32"><line x1="0" y1="16" x2="92" y2="16"/><circle cx="120" cy="16" r="10"/><line x1="148" y1="16" x2="240" y2="16"/></svg>
+    </div>
 
-That’s the point.</p>
-  
-<p>The goal isn’t to rewrite history. It’s to stop forcing injured players onto the court while still discouraging excessive load management. Availability would still matter; it would just be priced honestly, instead of enforced like a checkbox.
+    <section class="blog">
+      <article class="blog-post" id="first-blog-post">
+        <details open>
+          <summary>
+            <span class="post-title">NBA Awards Should Reward Greatness, Not Attendance [A Possible Solution]</span>
+            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="post-date">1/7/2026</p>
+          <div class="post-content">
+            <p>The NBA's 65-game minimum feels less like a solution and more like a workaround that accidentally became policy. It was meant to rein in load management. What it's actually done is turn awards into a compliance exercise.</p>
+            <p>The issue isn't that availability shouldn't matter. It's that the league chose to treat it as a switch instead of a spectrum. Sixty-five games earns full consideration; sixty-four wipes out an entire body of work. That disconnect is obvious to anyone who's watched an MVP or DPOY race unfold in real time, because voters have never evaluated seasons that way. They already account for missed games... the rule just does it clumsily and all at once.</p>
+            <p>There's a cleaner fix. Give players a 10-game grace period, roughly the amount of time we've collectively accepted stars will miss in a normal season. After that, subtract 1 percent from a player's total voting points for every additional missed game. No disqualifications. No cliffs. No pretending that missing 14 games and missing 34 games are the same thing. Most outcomes wouldn't change. The conversations would. Fewer debates about eligibility. Fewer performative appearances. Fewer great seasons erased by bad timing. In fact, this change likely wouldn't alter any MVP result from the past decade. The only race it meaningfully tightens is 2022–23, when Joel Embiid played 66 games and Nikola Jokić played 69 and even then, the winner stays the same. That's the point.</p>
+            <p>The goal isn't to rewrite history. It's to stop forcing injured players onto the court while still discouraging excessive load management. Availability would still matter; it would just be priced honestly, instead of enforced like a checkbox.</p>
+          </div>
+        </details>
+      </article>
 
-</p>
+      <!--
+      <article class="blog-post" id="second-blog-post">
+        <details>
+          <summary>
+            <span class="post-title">Second Blog Post</span>
+            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="post-date">Date</p>
+          <div class="post-content">
+            <p>This post starts collapsed.</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="blog-post" id="third-blog-post">
+        <details>
+          <summary>
+            <span class="post-title">Third Blog Post</span>
+            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </summary>
+          <p class="post-date">Date</p>
+          <div class="post-content">
+            <p>Another post.</p>
+          </div>
+        </details>
+      </article>
+      -->
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tag">Let's talk</p>
+      <div class="contact-row">
+        <a class="icon-btn" href="mailto:ethanwing20@gmail.com" aria-label="Email Ethan">
+          <img src="/email-outline.svg" alt="">
+        </a>
+        <a class="icon-btn" href="https://github.com/EdoubleU" aria-label="Ethan's GitHub" target="_blank" rel="noopener">
+          <img src="/github.svg" alt="">
+        </a>
+        <a class="text-link" href="https://ethanwing.me">Home</a>
       </div>
-    </details>
-  </article>
-
-  <!--<article class="blog-post" id="second-blog-post">
-    <details>
-      <summary class="post-title">Second Blog Post</summary>
-      <div class="post-content">
-        <p>This post starts collapsed.</p>
-      </div>
-    </details>
-  </article>
-
-  <article class="blog-post" id="third-blog-post">
-    <details>
-      <summary class="post-title">Third Blog Post</summary>
-      <div class="post-content">
-        <p>Another post.</p>
-      </div>
-    </details>
-  </article>
-
-</section>
-
-  </section>
+    </div>
+  </footer>
 
   <script src="/collapse.js"></script>
 </body>
 </html>
-
 
 
