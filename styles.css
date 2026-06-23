@@ -392,3 +392,118 @@ a{ color: inherit; text-decoration: none; }
   }
 }
 
+/* ----------------------------------------
+   Blog hero
+---------------------------------------- */
+.blog-hero{
+  position: relative;
+  isolation: isolate;
+  text-align: center;
+  padding: clamp(3rem, 9vw, 5rem) var(--gutter) clamp(2rem, 5vw, 3rem);
+}
+.blog-hero::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, var(--amber-soft), transparent 60%);
+}
+.blog-hero h1{
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  letter-spacing: .01em;
+  margin: 0 0 .6rem;
+}
+.blog-hero p{
+  font-family: var(--font-mono);
+  font-size: clamp(.8rem, 2vw, .95rem);
+  letter-spacing: .04em;
+  color: var(--chalk-dim);
+  margin: 0 auto;
+  max-width: 32em;
+}
+
+/* ----------------------------------------
+   Blog posts
+---------------------------------------- */
+.blog{
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(1rem, 4vw, 2rem) var(--gutter) clamp(4rem, 8vw, 6rem);
+  display: grid;
+  gap: 1.25rem;
+}
+
+.blog-post{
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.blog-post details{ overflow: hidden; }
+
+.blog-post summary{
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  transition: background-color .2s ease;
+}
+.blog-post summary::-webkit-details-marker{ display: none; }
+.blog-post summary:hover{ background: var(--panel-2); }
+.blog-post summary:focus-visible{ outline-offset: -3px; }
+
+.post-title{
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: clamp(1rem, 2.6vw, 1.25rem);
+  letter-spacing: .01em;
+  color: var(--chalk);
+  line-height: 1.35;
+}
+
+.chevron{
+  flex-shrink: 0;
+  color: var(--amber);
+  transition: transform .25s ease;
+}
+.blog-post details[open] .chevron{ transform: rotate(180deg); }
+
+.post-date{
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--amber);
+  margin: 0;
+  padding: 0 1.5rem;
+}
+
+.post-content{
+  padding: 0 1.5rem 1.5rem;
+}
+.post-content p{
+  color: var(--chalk-dim);
+  margin: 0 0 1rem;
+}
+.post-content p:last-child{ margin-bottom: 0; }
+
+/* ----------------------------------------
+   Back-home link (non-nav fallback)
+---------------------------------------- */
+.home-link{
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--chalk-dim);
+}
+.home-link:hover{ color: var(--amber); }
+
