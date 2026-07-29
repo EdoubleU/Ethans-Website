@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rebound Map — where the ball comes down</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1210;
+    --court:#0F1B18;
+    --court-2:#0D1815;
+    --line:#B9CBC2;
+    --line-bright:#E9F1EC;
+    --line-cool:#6FA69A;
+    --ink:#EAF0EC;
+    --muted:#8CA39A;
+    --dim:#5C7168;
+    --surface:#101B18;
+    --border:#243530;
+    --orange:#F2802E;
+    --cyan:#4CC9F0;
+    --hot:#FFC13B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+  body{padding:clamp(14px,3vw,34px);line-height:1.5}
+  .wrap{max-width:1140px;margin:0 auto}
+
+  header{margin-bottom:20px}
+  .eyebrow{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--line-cool);margin:0 0 6px}
+  h1{font-family:"Anton",Impact,sans-serif;font-weight:400;letter-spacing:.01em;
+    text-transform:uppercase;line-height:.92;margin:0;
+    font-size:clamp(38px,7vw,72px);color:var(--ink)}
+  h1 .hot{color:var(--orange)}
+  .sub{color:var(--muted);max-width:56ch;margin:12px 0 0;font-size:15px}
+
+  .stage{display:grid;grid-template-columns:1fr 300px;gap:22px;margin-top:26px;align-items:start}
+  @media(max-width:820px){.stage{grid-template-columns:1fr}}
+
+  .courtwrap{position:relative;border:1px solid var(--border);border-radius:14px;
+    overflow:hidden;background:var(--court);box-shadow:0 24px 60px -30px #000}
+  canvas{display:block;width:100%;height:auto;touch-action:none;cursor:crosshair}
+  .hint{position:absolute;left:12px;bottom:10px;font-family:"Space Mono",monospace;
+    font-size:11px;color:var(--dim);letter-spacing:.04em;pointer-events:none;
+    background:rgba(11,18,16,.6);padding:3px 8px;border-radius:6px;backdrop-filter:blur(4px)}
+
+  .panel{display:flex;flex-direction:column;gap:16px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:15px 16px}
+  .k{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--dim);margin:0 0 8px}
+
+  .shotline{display:flex;align-items:baseline;gap:10px}
+  .bignum{font-family:"Anton",sans-serif;font-size:44px;line-height:.85;color:var(--orange)}
+  .bigunit{font-family:"Space Mono",monospace;font-size:13px;color:var(--muted)}
+  .zone{font-size:15px;font-weight:600;margin-top:6px}
+
+  .bar{margin:11px 0}
+  .bar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px}
+  .bar .lab b{font-family:"Space Mono",monospace;font-weight:700;color:var(--ink)}
+  .bar .lab span{color:var(--muted)}
+  .track{height:9px;border-radius:5px;background:#0a120f;overflow:hidden;border:1px solid #1c2a26}
+  .fill{height:100%;border-radius:5px;transition:width .32s cubic-bezier(.2,.7,.2,1)}
+  .fill.weak{background:linear-gradient(90deg,#B4257A,#F2662E)}
+  .fill.mid{background:linear-gradient(90deg,#3B5B9E,#4CC9F0)}
+  .fill.strong{background:linear-gradient(90deg,#2f6b57,#7BC9A6)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat .v{font-family:"Space Mono",monospace;font-size:20px;color:var(--ink)}
+  .stat .v small{font-size:12px;color:var(--muted)}
+  .stat .n{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+  .presets{display:flex;flex-wrap:wrap;gap:7px}
+  .presets button{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.03em;
+    color:var(--line);background:#0c1614;border:1px solid var(--border);border-radius:999px;
+    padding:7px 12px;cursor:pointer;transition:all .15s}
+  .presets button:hover{border-color:var(--line-cool);color:var(--ink)}
+  .presets button.on{background:var(--orange);border-color:var(--orange);color:#1a0e05;font-weight:700}
+  .presets button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+  .toggles{display:flex;flex-direction:column;gap:9px}
+  .tog{display:flex;align-items:center;gap:9px;font-size:13px;cursor:pointer;color:var(--line)}
+  .tog input{appearance:none;width:34px;height:19px;border-radius:999px;background:#0c1614;
+    border:1px solid var(--border);position:relative;cursor:pointer;transition:.18s;flex:none}
+  .tog input:checked{background:var(--line-cool);border-color:var(--line-cool)}
+  .tog input::after{content:"";position:absolute;top:1.5px;left:1.5px;width:14px;height:14px;
+    border-radius:50%;background:#dfe9e4;transition:.18s}
+  .tog input:checked::after{transform:translateX(15px)}
+  .tog input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+  .legend{display:flex;align-items:center;gap:9px;font-size:11px;color:var(--muted);
+    font-family:"Space Mono",monospace}
+  .legbar{height:9px;flex:1;border-radius:5px;
+    background:linear-gradient(90deg,rgba(30,45,80,.2),#3B1D6E,#B4257A,#F2662E,#FFC13B,#FFF6D8)}
+
+  footer{margin-top:24px;border-top:1px solid var(--border);padding-top:14px;
+    color:var(--dim);font-size:12px;max-width:80ch}
+  footer a{color:var(--line-cool)}
+  footer b{color:var(--muted);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Rebound tracking model · half court</p>
+    <h1>Where it <span class="hot">comes&nbsp;down</span></h1>
+    <p class="sub">Drag the ball anywhere on the floor. The thermal plume shows where a
+      <em>missed</em> shot from that spot is most likely to be rebounded — built from the
+      patterns optical-tracking studies found in real NBA misses.</p>
+  </header>
+
+  <div class="stage">
+    <div class="courtwrap">
+      <canvas id="court"></canvas>
+      <div class="hint" id="hint">Drag the ball to move the shot</div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <p class="k">The shot</p>
+        <div class="shotline"><span class="bignum" id="dist">24</span><span class="bigunit">ft from rim</span></div>
+        <div class="zone" id="zone">Top-of-key three</div>
+      </div>
+
+      <div class="card">
+        <p class="k">Where the carom lands</p>
+        <div class="bar">
+          <div class="lab"><span>Weak side <em style="color:var(--dim)">(away from shot)</em></span><b id="wv">0%</b></div>
+          <div class="track"><div class="fill weak" id="wf" style="width:0"></div></div>
+        </div>
+        <div class="bar">
+          <div class="lab"><span>Middle / in front of rim</span><b id="mv">0%</b></div>
+          <div class="track"><div class="fill mid" id="mf" style="width:0"></div></div>
+        </div>
+        <div class="bar">
+          <div class="lab"><span>Strong side <em style="color:var(--dim)">(shot side)</em></span><b id="sv">0%</b></div>
+          <div class="track"><div class="fill strong" id="sf" style="width:0"></div></div>
+        </div>
+      </div>
+
+      <div class="card grid2">
+        <div class="stat">
+          <p class="k" style="margin-bottom:4px">Carom length</p>
+          <div class="v" id="carom">7.4 <small>ft</small></div>
+          <div class="n">avg. distance off the rim</div>
+        </div>
+        <div class="stat">
+          <p class="k" style="margin-bottom:4px">Off. rebound</p>
+          <div class="v" id="orr">30<small>%</small></div>
+          <div class="n">est. offense recovers</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="k">Jump to a spot</p>
+        <div class="presets" id="presets"></div>
+      </div>
+
+      <div class="card">
+        <p class="k">Overlays</p>
+        <div class="toggles">
+          <label class="tog"><input type="checkbox" id="tDots"><span>Show 130 simulated caroms</span></label>
+          <label class="tog"><input type="checkbox" id="tLong"><span>Show the long-rebound ring (7–21 ft)</span></label>
+        </div>
+        <div class="legend" style="margin-top:13px">
+          <span>cold</span><div class="legbar"></div><span>hot</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <b>How this is built:</b> a mixture model tuned to three findings from optical shot-tracking
+    research — missed shots carom to the <b>weak side</b> most often, and that bias is strongest on
+    corner and baseline shots but nearly symmetric from the top of the key; <b>longer shots throw
+    longer rebounds</b> (threes reach the free-throw-line area about twice as often as twos); and
+    offensive-rebound rate is <b>U-shaped</b> with shot distance. It's an estimate of tendencies for a
+    single generic miss — not a lookup of any one team's data, and any individual bounce is chaos.
+    Both three-point lines are drawn for reference: the solid teal <b>NBA</b> arc (23′9″, 22′ corners)
+    and the gold dashed <b>NFHS high-school</b> arc (a uniform 19′9″ with no flat corners). The rebound
+    model itself keys off the true distance from the rim, so it works the same at either level.
+    Findings drawn from SportVU / PBPStats rebound-tracking work (Sloan "Deconstructing the Rebound," kenpom, Grantland, Nylon Calculus).
+  </footer>
+</div>
+
+<script>
+const cv = document.getElementById('court');
+const ctx = cv.getContext('2d');
+
+// ---- court geometry (feet). basket near top, player shoots "up" the screen ----
+const VIEW_W = 50, VIEW_H = 32;      // displayed region
+const BX = 0, BY = 5.25;             // rim center (5.25 ft off baseline)
+const RIM_R = 0.75;
+let scale = 12, W = 600, Hpx = 384, dpr = 1;
+
+function resize(){
+  const cssW = cv.parentElement.clientWidth;
+  scale = cssW / VIEW_W;
+  W = cssW; Hpx = VIEW_H * scale;
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cv.style.height = Hpx + 'px';
+  cv.width = Math.round(W * dpr);
+  cv.height = Math.round(Hpx * dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  render();
+}
+const fx = xf => (xf + 25) * scale;
+const fy = yf => yf * scale;
+const fr = rf => rf * scale;
+
+// ---- model ----
+function gauss(){ // standard normal (Box-Muller)
+  let u=0,v=0; while(!u)u=Math.random(); while(!v)v=Math.random();
+  return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+}
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+
+const COLS=64, ROWS=41, N=3500;
+const grid = new Float32Array(COLS*ROWS);
+
+function computeModel(sx, sy){
+  const dx=sx-BX, dy=sy-BY;
+  let dist=Math.hypot(dx,dy); if(dist<0.1)dist=0.1;
+  const a = clamp(Math.abs(dx)/dist, 0, 1);          // 0 straight-on → 1 corner/baseline
+  const s = dx>=0 ? 1 : -1;                           // shooting side
+  const t = clamp((dist-3)/(23.75-3), 0, 1);          // 0 layup → 1 three
+  const meanReb = clamp(1.5 + 0.25*dist, 1.4, 9);
+
+  // component weights
+  let wRim = 0.12 + 0.55*(1-t);
+  let wWeak = 0.30 + 0.35*a;
+  let wStrong = Math.max(0.05, 0.28 - 0.14*a);
+  let wLong = 0.12 + 0.40*t;
+  const wsum = wRim+wWeak+wStrong+wLong;
+  wRim/=wsum; wWeak/=wsum; wStrong/=wsum; wLong/=wsum;
+
+  const norm=(x,y)=>{const m=Math.hypot(x,y)||1;return [x/m,y/m];};
+  const [wnx,wny]=norm(-s*1.0, 0.55);
+  const [snx,sny]=norm( s*1.0, 0.55);
+  const comps=[
+    {w:wRim,    cx:BX,                  cy:BY+0.35*meanReb,      sig:1.6},
+    {w:wWeak,   cx:BX+wnx*meanReb,      cy:BY+wny*meanReb,       sig:2.6+1.4*t},
+    {w:wStrong, cx:BX+snx*meanReb,      cy:BY+sny*meanReb,       sig:2.4+1.2*t},
+    {w:wLong,   cx:BX,                  cy:BY+1.35*meanReb,      sig:2.8+1.6*t},
+  ];
+  // cumulative for sampling
+  let acc=0; comps.forEach(c=>{acc+=c.w;c.cum=acc;});
+
+  grid.fill(0);
+  const dots=[];
+  let weak=0,mid=0,strong=0,sumD=0,maxc=0;
+  for(let i=0;i<N;i++){
+    const r=Math.random(); let c=comps[0];
+    for(const cc of comps){ if(r<=cc.cum){c=cc;break;} }
+    let rx=c.cx+gauss()*c.sig;
+    let ry=c.cy+gauss()*c.sig*0.92;
+    rx=clamp(rx,-24.5,24.5); ry=clamp(ry,0.2,31.6);
+    // bin
+    const col=clamp(Math.floor((rx+25)/50*COLS),0,COLS-1);
+    const row=clamp(Math.floor(ry/32*ROWS),0,ROWS-1);
+    const idx=row*COLS+col; const nv=++grid[idx]; if(nv>maxc)maxc=nv;
+    // classify
+    if(Math.abs(rx)<2.6) mid++;
+    else if((rx>=0?1:-1)===s) strong++; else weak++;
+    sumD += Math.hypot(rx-BX,ry-BY);
+    if(i<130) dots.push([rx,ry]);
+  }
+  const tot=weak+mid+strong;
+  // offensive-rebound rate: U-shape in shot distance
+  const orr = clamp(0.20 + 0.18*Math.exp(-Math.pow((dist-1.5)/3.5,2)) + 0.09*t, 0.15, 0.45);
+
+  return {
+    dist, maxc, dots,
+    weak:weak/tot, mid:mid/tot, strong:strong/tot,
+    carom:sumD/N, orr,
+    label: zoneLabel(sx,sy,dist)
+  };
+}
+
+function zoneLabel(sx,sy,dist){
+  const corner = Math.abs(sx)>=22 && sy<=14.2;
+  if(dist<4) return "At the rim";
+  if(corner) return "Corner three";
+  if(dist>=23.75) return Math.abs(sx)<7 ? "Top-of-key three" : "Wing three";
+  if(dist>=19.75) return "HS three · long two";
+  if(dist>=15) return "Long two";
+  if(dist>=9)  return "Mid-range two";
+  return "Short jumper";
+}
+
+// ---- thermal colormap ----
+const STOPS=[
+  [0.00, 30,45,80],[0.15, 60,40,120],[0.35,150,40,130],
+  [0.55,220,70,60],[0.75,242,140,40],[0.90,255,200,70],[1.00,255,246,214]
+];
+function heatColor(d){
+  let i=0; while(i<STOPS.length-1 && d>STOPS[i+1][0]) i++;
+  const A=STOPS[i], B=STOPS[Math.min(i+1,STOPS.length-1)];
+  const span=(B[0]-A[0])||1, f=clamp((d-A[0])/span,0,1);
+  return [A[1]+(B[1]-A[1])*f, A[2]+(B[2]-A[2])*f, A[3]+(B[3]-A[3])*f];
+}
+
+// offscreen low-res heat canvas (upscaled = smooth blur)
+const heatCv=document.createElement('canvas');
+heatCv.width=COLS; heatCv.height=ROWS;
+const hctx=heatCv.getContext('2d');
+const himg=hctx.createImageData(COLS,ROWS);
+
+function drawHeat(model){
+  const px=himg.data; const mx=model.maxc||1;
+  for(let i=0;i<COLS*ROWS;i++){
+    let d=grid[i]/mx; d=Math.pow(d,0.72);
+    const o=i*4;
+    if(d<=0.04){ px[o+3]=0; continue; }
+    const [r,g,b]=heatColor(d);
+    const a=Math.min(1,(d-0.04)*1.75);
+    px[o]=r; px[o+1]=g; px[o+2]=b; px[o+3]=Math.round(a*235);
+  }
+  hctx.putImageData(himg,0,0);
+  ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+  ctx.drawImage(heatCv, 0,0, W, Hpx);
+}
+
+// ---- court drawing ----
+function line(pts,color,w,dash){
+  ctx.beginPath(); ctx.lineWidth=w; ctx.strokeStyle=color;
+  ctx.setLineDash(dash||[]);
+  pts.forEach((p,i)=> i?ctx.lineTo(fx(p[0]),fy(p[1])):ctx.moveTo(fx(p[0]),fy(p[1])));
+  ctx.stroke(); ctx.setLineDash([]);
+}
+function arc(cxf,cyf,rf,a0,a1,color,w,dash){
+  ctx.beginPath(); ctx.lineWidth=w; ctx.strokeStyle=color; ctx.setLineDash(dash||[]);
+  ctx.arc(fx(cxf),fy(cyf),fr(rf),a0,a1); ctx.stroke(); ctx.setLineDash([]);
+}
+function drawCourt(bright){
+  const c = bright ? 'rgba(233,241,236,.85)' : 'rgba(185,203,194,.28)';
+  const cool = bright ? 'rgba(111,166,154,.9)' : 'rgba(111,166,154,.34)';
+  const lw = bright ? 1.4 : 1;
+  // paint / lane (16 ft wide, FT line 19 ft from baseline)
+  line([[-8,0],[-8,19],[8,19],[8,0]], c, lw);
+  // free-throw circle
+  const ftYpx=fy(19);
+  ctx.beginPath();ctx.lineWidth=lw;ctx.strokeStyle=c;
+  ctx.arc(fx(0),ftYpx,fr(6),Math.PI,2*Math.PI);ctx.stroke(); // top solid
+  ctx.beginPath();ctx.lineWidth=lw;ctx.strokeStyle=c;ctx.setLineDash([fr(0.9),fr(0.9)]);
+  ctx.arc(fx(0),ftYpx,fr(6),0,Math.PI);ctx.stroke();ctx.setLineDash([]); // bottom dashed
+  // backboard + rim
+  line([[-3,4],[3,4]], bright?'#dfe9e4':'rgba(200,214,208,.5)', bright?2.4:1.6);
+  ctx.beginPath();ctx.lineWidth=bright?2.2:1.6;ctx.strokeStyle=bright?'#F2802E':'rgba(242,128,46,.6)';
+  ctx.arc(fx(BX),fy(BY),fr(RIM_R),0,2*Math.PI);ctx.stroke();
+  // restricted area (4 ft)
+  arc(BX,BY,4,Math.PI,2*Math.PI, cool, lw);
+  line([[-4,4],[-4,5.25]],cool,lw); line([[4,4],[4,5.25]],cool,lw);
+  // three-point line: corners at x=±22 up to y≈14.2, then arc r=23.75
+  const yJoin=BY+Math.sqrt(23.75*23.75-22*22); // ≈14.2
+  line([[-22,0],[-22,yJoin]], cool, lw);
+  line([[ 22,0],[ 22,yJoin]], cool, lw);
+  const aJoin=Math.atan2(fr(yJoin-BY),fr(22)); // symmetric angle
+  ctx.beginPath();ctx.lineWidth=lw;ctx.strokeStyle=cool;
+  ctx.arc(fx(BX),fy(BY),fr(23.75), aJoin, Math.PI-aJoin);ctx.stroke();
+  // baseline
+  line([[-25,0.4],[25,0.4]], c, lw);
+}
+
+// high-school (NFHS) 3pt line: continuous 19'9" arc, no flat corners. drawn as
+// a gold dashed reference so it can be compared against the solid NBA line.
+function draw3ptRef(){
+  const r=19.75, HS='rgba(240,206,120,.95)';
+  const tMax=Math.acos(clamp((0.4-BY)/r,-1,1));  // sweep until the arc meets the baseline
+  const steps=90;
+  ctx.beginPath();ctx.lineWidth=1.5;ctx.strokeStyle=HS;ctx.setLineDash([fr(.55),fr(.4)]);
+  for(let i=0;i<=steps;i++){
+    const th=-tMax+2*tMax*i/steps;
+    const xf=Math.sin(th)*r, yf=BY+Math.cos(th)*r;
+    i?ctx.lineTo(fx(xf),fy(yf)):ctx.moveTo(fx(xf),fy(yf));
+  }
+  ctx.stroke();ctx.setLineDash([]);
+  // labels on the right flank, clear of the ball and center plume
+  ctx.font='700 '+Math.max(9,fr(0.6))+'px "Space Mono", monospace';
+  ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillStyle=HS;
+  ctx.fillText("HS 19′9″",  fx(8.3), fy(BY+Math.sqrt(r*r-8*8)-0.3));
+  ctx.fillStyle='rgba(148,196,183,1)';
+  ctx.fillText("NBA 23′9″", fx(8.3), fy(BY+Math.sqrt(23.75*23.75-8*8)-0.3));
+}
+
+function drawBall(x,y){
+  const px=fx(x),py=fy(y),r=Math.max(9,fr(0.95));
+  ctx.save();
+  ctx.beginPath();ctx.arc(px,py,r+4,0,2*Math.PI);
+  ctx.fillStyle='rgba(242,128,46,.18)';ctx.fill();
+  const g=ctx.createRadialGradient(px-r*.3,py-r*.3,r*.2,px,py,r);
+  g.addColorStop(0,'#FF9E52');g.addColorStop(1,'#D9641B');
+  ctx.beginPath();ctx.arc(px,py,r,0,2*Math.PI);ctx.fillStyle=g;ctx.fill();
+  ctx.lineWidth=1.4;ctx.strokeStyle='#5b2a08';
+  ctx.beginPath();ctx.arc(px,py,r,0,2*Math.PI);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(px-r,py);ctx.lineTo(px+r,py);
+  ctx.moveTo(px,py-r);ctx.lineTo(px,py+r);
+  ctx.arc(px,py,r,-Math.PI*.5,Math.PI*.5);ctx.stroke();
+  ctx.restore();
+}
+
+// ---- state + render ----
+let shot={x:0, y:29};           // top of key three
+let model=computeModel(shot.x,shot.y);
+let showDots=false, showLong=false;
+
+function render(){
+  ctx.clearRect(0,0,W,Hpx);
+  // court surface + faint planks
+  ctx.fillStyle='#0F1B18'; ctx.fillRect(0,0,W,Hpx);
+  ctx.strokeStyle='rgba(255,255,255,.028)'; ctx.lineWidth=1;
+  for(let xf=-25+4; xf<25; xf+=4){ctx.beginPath();ctx.moveTo(fx(xf),0);ctx.lineTo(fx(xf),Hpx);ctx.stroke();}
+
+  drawCourt(false);       // dim base lines
+  drawHeat(model);        // thermal plume
+  drawCourt(true);        // bright lines back on top
+  draw3ptRef();           // HS + NBA three-point reference arcs
+
+  if(showLong){
+    arc(BX,BY,7,0,2*Math.PI,'rgba(76,201,240,.45)',1.2,[fr(.4),fr(.4)]);
+    arc(BX,BY,21,0,2*Math.PI,'rgba(76,201,240,.35)',1.2,[fr(.4),fr(.4)]);
+  }
+  // trajectory shot → rim
+  ctx.beginPath();ctx.setLineDash([fr(.5),fr(.4)]);ctx.lineWidth=1.3;
+  ctx.strokeStyle='rgba(76,201,240,.55)';
+  ctx.moveTo(fx(shot.x),fy(shot.y));ctx.lineTo(fx(BX),fy(BY));ctx.stroke();ctx.setLineDash([]);
+
+  if(showDots){
+    ctx.fillStyle='rgba(255,255,255,.7)';
+    model.dots.forEach(d=>{ctx.beginPath();ctx.arc(fx(d[0]),fy(d[1]),1.6,0,2*Math.PI);ctx.fill();});
+  }
+  drawBall(shot.x,shot.y);
+  updatePanel();
+}
+
+function pct(x){return Math.round(x*100)+'%';}
+function updatePanel(){
+  document.getElementById('dist').textContent=model.dist.toFixed(1);
+  document.getElementById('zone').textContent=model.label;
+  document.getElementById('wv').textContent=pct(model.weak);
+  document.getElementById('mv').textContent=pct(model.mid);
+  document.getElementById('sv').textContent=pct(model.strong);
+  document.getElementById('wf').style.width=pct(model.weak);
+  document.getElementById('mf').style.width=pct(model.mid);
+  document.getElementById('sf').style.width=pct(model.strong);
+  document.getElementById('carom').innerHTML=model.carom.toFixed(1)+' <small>ft</small>';
+  document.getElementById('orr').innerHTML=Math.round(model.orr*100)+'<small>%</small>';
+}
+
+function setShot(x,y,recompute=true){
+  shot.x=clamp(x,-24,24); shot.y=clamp(y,0.6,31);
+  if(Math.hypot(shot.x-BX,shot.y-BY)<1.1) shot.y=BY+1.1;
+  if(recompute) model=computeModel(shot.x,shot.y);
+  render();
+}
+
+// ---- pointer interaction ----
+let dragging=false, raf=0;
+function evToFeet(e){
+  const r=cv.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width*VIEW_W-25;
+  const y=(e.clientY-r.top)/r.height*VIEW_H;
+  return [x,y];
+}
+function onMove(e){
+  if(!dragging)return;
+  const [x,y]=evToFeet(e);
+  if(raf)return;
+  raf=requestAnimationFrame(()=>{raf=0; setActivePreset(null); setShot(x,y);});
+}
+cv.addEventListener('pointerdown',e=>{dragging=true;cv.setPointerCapture(e.pointerId);
+  const[x,y]=evToFeet(e);setActivePreset(null);setShot(x,y);
+  document.getElementById('hint').style.opacity=0;});
+cv.addEventListener('pointermove',onMove);
+cv.addEventListener('pointerup',()=>dragging=false);
+cv.addEventListener('pointercancel',()=>dragging=false);
+
+// ---- presets (animated) ----
+const PRESETS=[
+  ['Layup',0,7.5],['Free throw',0,19],['Mid elbow',10,19],
+  ['HS 3',0,25],['Wing 3',20,22],['Corner 3',22,3],['Top 3',0,29]
+];
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pc=document.getElementById('presets');
+PRESETS.forEach((p,i)=>{
+  const b=document.createElement('button');b.textContent=p[0];b.dataset.i=i;
+  b.onclick=()=>{setActivePreset(i);animateTo(p[1],p[2]);};
+  pc.appendChild(b);
+});
+function setActivePreset(i){
+  [...pc.children].forEach((b,j)=>b.classList.toggle('on', j===i));
+}
+let anim=0;
+function animateTo(tx,ty){
+  cancelAnimationFrame(anim);
+  if(reduce){setShot(tx,ty);return;}
+  const sx=shot.x,sy=shot.y,dur=440,t0=performance.now();
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  (function step(now){
+    const k=clamp((now-t0)/dur,0,1),e=ease(k);
+    setShot(sx+(tx-sx)*e, sy+(ty-sy)*e);
+    if(k<1)anim=requestAnimationFrame(step);
+  })(t0);
+}
+
+document.getElementById('tDots').addEventListener('change',e=>{showDots=e.target.checked;render();});
+document.getElementById('tLong').addEventListener('change',e=>{showLong=e.target.checked;render();});
+
+window.addEventListener('resize',resize);
+setActivePreset(6);
+resize();
+</script>
+</body>
+</html>
