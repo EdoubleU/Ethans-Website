@@ -31,6 +31,12 @@
   .wrap{max-width:1140px;margin:0 auto}
 
   header{margin-bottom:20px}
+  .backlink{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:18px;
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;text-decoration:none;color:var(--line-cool);
+    transition:color .15s,gap .15s}
+  .backlink:hover{color:var(--orange);gap:.72rem}
+  .backlink:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
   .eyebrow{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.28em;
     text-transform:uppercase;color:var(--line-cool);margin:0 0 6px}
   h1{font-family:"Anton",Impact,sans-serif;font-weight:400;letter-spacing:.01em;
@@ -106,6 +112,10 @@
 <body>
 <div class="wrap">
   <header>
+    <a class="backlink" href="/">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Ethan Wing — home
+    </a>
     <p class="eyebrow">Rebound tracking model · half court</p>
     <h1>Where it <span class="hot">comes&nbsp;down</span></h1>
     <p class="sub">Drag the ball anywhere on the floor. The thermal plume shows where a
@@ -517,3 +527,4 @@ resize();
 </script>
 </body>
 </html>
+
