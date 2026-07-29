@@ -90,6 +90,91 @@
       opacity: 0.78;
       margin: 0.25rem 0 0;
     }
+
+    /* Tools / links shelf. Move into styles.css when convenient. */
+    .tool-shelf {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 620px) {
+      .tool-shelf { grid-template-columns: 1fr 1fr; }
+    }
+
+    .tool-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      padding: 1.15rem 1.25rem;
+      margin: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+    }
+    a.tool-card:hover {
+      border-color: #C6E24A;
+      background: rgba(198, 226, 74, 0.06);
+      transform: translateY(-2px);
+    }
+    a.tool-card:focus-visible {
+      outline: 2px solid #C6E24A;
+      outline-offset: 3px;
+    }
+    .tool-card.is-planned { opacity: 0.6; cursor: default; }
+
+    .tool-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+    .tool-name {
+      font-family: "Oswald", system-ui, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-size: 1.08rem;
+    }
+    .tool-desc {
+      font-size: 0.92rem;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .tool-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .tool-status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .tool-status.is-live { color: #C6E24A; }
+    .tool-status.is-soon { color: inherit; opacity: 0.6; }
+
+    .tool-go {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.15rem;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: #C6E24A;
+    }
+    .tool-go svg { transition: transform 0.18s ease; }
+    a.tool-card:hover .tool-go svg { transform: translateX(3px); }
   </style>
 </head>
 <body>
@@ -101,6 +186,7 @@
       <a href="#admin">Admin</a>
       <a href="#coaching">Coaching</a>
       <a href="#dev">Game Dev</a>
+      <a href="#tools">Tools</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -193,6 +279,53 @@
           <p class="game-name">Daybound</p>
           <p class="game-line">Rise. Move. Die. Repeat.</p>
           <p class="game-status">Steam page coming soon</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 240 32"><line x1="0" y1="16" x2="92" y2="16"/><circle cx="120" cy="16" r="10"/><line x1="148" y1="16" x2="240" y2="16"/></svg>
+    </div>
+
+    <section class="feature" id="tools">
+      <p class="eyebrow">Tools</p>
+      <h2>Tools &amp; Links</h2>
+      <p>Coaching tools. More on the way.</p>
+
+      <div class="tool-shelf">
+        <a class="tool-card" href="/rebound-map.html">
+          <span class="tool-head">
+            <span class="tool-name">Rebound Heat Map</span>
+            <span class="tool-status is-live">Live</span>
+          </span>
+          <span class="tool-desc">Interactive map of where missed shots are most likely to be rebounded, based on where the ball was shot from. NBA and high-school three-point lines.</span>
+          <span class="tool-go">Open tool
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <div class="tool-card is-planned" aria-disabled="true">
+          <span class="tool-head">
+            <span class="tool-name">Future Tool</span>
+            <span class="tool-status is-soon">Planned</span>
+          </span>
+          <span class="tool-desc">Coming Soon</span>
+        </div>
+
+        <div class="tool-card is-planned" aria-disabled="true">
+          <span class="tool-head">
+            <span class="tool-name">Lineup &amp; Future Tool/span>
+            <span class="tool-status is-soon">Planned</span>
+          </span>
+          <span class="tool-desc">Coming Soon</span>
+        </div>
+
+        <div class="tool-card is-planned" aria-disabled="true">
+          <span class="tool-head">
+            <span class="tool-name">Future Tool</span>
+            <span class="tool-status is-soon">Planned</span>
+          </span>
+          <span class="tool-desc">Coming Soon</span>
         </div>
       </div>
     </section>
