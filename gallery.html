@@ -293,7 +293,7 @@
           fig.setAttribute('role', 'button');
           fig.setAttribute('aria-label', (photo.caption || 'Photo') + ' — click to view full size');
           fig.innerHTML =
-            '<img src="/photos/' + photo.filename + '" alt="' + escHtml(photo.caption || '') + '" loading="lazy">' +
+            '<img src="' + ((photo.filename||'').startsWith('/') || (photo.filename||'').startsWith('http') ? photo.filename : '/photos/' + photo.filename) + '" alt="' + escHtml(photo.caption || '') + '" loading="lazy">' +
             (photo.caption || photo.date
               ? '<figcaption>' +
                   (photo.caption ? escHtml(photo.caption) : '') +
@@ -336,7 +336,7 @@
 
       function showPhoto() {
         var p = photos[current];
-        lbImg.src = '/photos/' + p.filename;
+        lbImg.src = (p.filename.startsWith('/') || p.filename.startsWith('http')) ? p.filename : '/photos/' + p.filename;
         lbImg.alt = p.caption || '';
         var capText = p.caption ? escHtml(p.caption) : '';
         var dateText = p.date ? '<span class="lightbox-date">' + p.date + '</span>' : '';
