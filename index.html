@@ -10,172 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Game shelf additions. Move these rules into styles.css when convenient. -->
-  <style>
-    .game-shelf {
-      display: grid;
-      gap: 1.75rem;
-      margin-top: 1.5rem;
-    }
-    @media (min-width: 760px) {
-      .game-shelf { grid-template-columns: 1fr 1fr; align-items: start; }
-    }
-
-    /* Shared tile frame so a linked tile and an unlinked one sit at the same weight */
-    .game-shelf .game-tile {
-      display: block;
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      margin: 0;
-    }
-    .game-shelf .game-tile img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /* Unpublished tile: same frame, no link affordance */
-    .game-tile.is-unreleased {
-      cursor: default;
-      color: inherit;
-    }
-    .game-tile.is-unreleased img { filter: saturate(0.92); }
-
-    .game-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      opacity: 0.72;
-      margin-top: 0.6rem;
-    }
-    .game-status::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-      opacity: 0.85;
-    }
-
-    .game-badge {
-      position: absolute;
-      top: 0.75rem;
-      left: 0.75rem;
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.55rem;
-      border-radius: 4px;
-      background: rgba(20, 24, 31, 0.82);
-      color: #C6E24A;
-      backdrop-filter: blur(2px);
-    }
-
-    .game-name {
-      font-family: "Oswald", system-ui, sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      font-size: 1.05rem;
-      margin: 0.85rem 0 0;
-    }
-    .game-line {
-      font-size: 0.92rem;
-      opacity: 0.78;
-      margin: 0.25rem 0 0;
-    }
-
-    /* Tools / links shelf. Move into styles.css when convenient. */
-    .tool-shelf {
-      display: grid;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    @media (min-width: 620px) {
-      .tool-shelf { grid-template-columns: 1fr 1fr; }
-    }
-
-    .tool-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      padding: 1.15rem 1.25rem;
-      margin: 0;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.02);
-      color: inherit;
-      text-decoration: none;
-      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
-    }
-    a.tool-card:hover {
-      border-color: #C6E24A;
-      background: rgba(198, 226, 74, 0.06);
-      transform: translateY(-2px);
-    }
-    a.tool-card:focus-visible {
-      outline: 2px solid #C6E24A;
-      outline-offset: 3px;
-    }
-    .tool-card.is-planned { opacity: 0.6; cursor: default; }
-
-    .tool-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-    }
-    .tool-name {
-      font-family: "Oswald", system-ui, sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      font-size: 1.08rem;
-    }
-    .tool-desc {
-      font-size: 0.92rem;
-      opacity: 0.8;
-      line-height: 1.5;
-    }
-
-    .tool-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      white-space: nowrap;
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .tool-status::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-    .tool-status.is-live { color: #C6E24A; }
-    .tool-status.is-soon { color: inherit; opacity: 0.6; }
-
-    .tool-go {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.15rem;
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      color: #C6E24A;
-    }
-    .tool-go svg { transition: transform 0.18s ease; }
-    a.tool-card:hover .tool-go svg { transform: translateX(3px); }
-  </style>
+  <!-- Netlify Identity: intercepts confirmation/invite tokens that land on this page -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -186,7 +22,6 @@
       <a href="#admin">Admin</a>
       <a href="#coaching">Coaching</a>
       <a href="#dev">Game Dev</a>
-      <a href="#tools">Tools</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -215,14 +50,13 @@
         <img src="admin.png" alt="Sports administration illustration" loading="lazy">
       </div>
       <div class="track-copy">
-        <p class="eyebrow">Admin</p>
+        <p class="eyebrow">Track / Admin</p>
         <h2>Sports League Admin</h2>
         <p>25 years building and managing sports and recreation programs, including multi-million dollar budgets. Extensive experience in:</p>
         <ul>
-          <li>Sport program and athletic ops consulting</li>
-          <li>Developing and managing operating budgets as large as $4.2 million</li>
+          <li>Sport program consulting, coaching services, and athletic operations support</li>
           <li>Scheduling, officials, staffing, and compliance</li>
-          <li>Running large-scale events, tournaments, and leagues for thousands of participants each year</li>
+          <li>Running large-scale events, tournaments, and leagues</li>
         </ul>
       </div>
     </section>
@@ -236,15 +70,13 @@
         <img src="coach.png" alt="Basketball coaching illustration" loading="lazy">
       </div>
       <div class="track-copy">
-        <p class="eyebrow">Coaching</p>
+        <p class="eyebrow">Track / Coaching</p>
         <h2>Basketball Coaching</h2>
         <p>20 years coaching athletes from youth to varsity using an ecological approach to teaching. I love to:</p>
         <ul>
           <li>Design offensive and defensive tactics appropriate for various developmental stages</li>
           <li>Manage practices, game strategy, and player rotations</li>
           <li>Assist with opponent scouting, pre-game preparation, and in-game adjustments</li>
-          <li>Nerd out on the game</li>
-          <li>Keep things fun for players and coaches</li>
         </ul>
       </div>
     </section>
@@ -254,87 +86,23 @@
     </div>
 
     <section class="feature" id="dev">
-      <p class="eyebrow">Dev</p>
+      <p class="eyebrow">Track / Dev</p>
       <h2>Game Development</h2>
       <p>I design and build minimal, intuitive games.</p>
-
-      <div class="game-shelf">
-        <div class="game-entry">
-          <a class="game-tile" href="https://store.steampowered.com/app/3482370/Our_Dreadling/" target="_blank" rel="noopener">
-            <img src="mydread.jpg" alt="Our Dreadling key art" loading="lazy">
-            <span class="game-cta">
-              View on Steam
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </a>
-          <p class="game-name">Our Dreadling</p>
-          <p class="game-line">Out now on Steam.</p>
-        </div>
-
-        <div class="game-entry">
-          <div class="game-tile is-unreleased">
-            <img src="daybound.png" alt="Daybound key art" loading="lazy">
-            <span class="game-badge">Coming soon</span>
-          </div>
-          <p class="game-name">Daybound</p>
-          <p class="game-line">Rise. Move. Die. Repeat.</p>
-          <p class="game-status">Steam page coming soon</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider" aria-hidden="true">
-      <svg viewBox="0 0 240 32"><line x1="0" y1="16" x2="92" y2="16"/><circle cx="120" cy="16" r="10"/><line x1="148" y1="16" x2="240" y2="16"/></svg>
-    </div>
-
-    <section class="feature" id="tools">
-      <p class="eyebrow">Tools</p>
-      <h2>Tools &amp; Links</h2>
-      <p>Coaching tools. More on the way.</p>
-
-      <div class="tool-shelf">
-        <a class="tool-card" href="/rebound-map.html">
-          <span class="tool-head">
-            <span class="tool-name">Rebound Heat Map</span>
-            <span class="tool-status is-live">Live</span>
-          </span>
-          <span class="tool-desc">Interactive map of where missed shots are most likely to be rebounded, based on where the ball was shot from. NBA and high-school three-point lines.</span>
-          <span class="tool-go">Open tool
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </a>
-
-        <div class="tool-card is-planned" aria-disabled="true">
-          <span class="tool-head">
-            <span class="tool-name">Future Tool</span>
-            <span class="tool-status is-soon">Planned</span>
-          </span>
-          <span class="tool-desc">Coming Soon</span>
-        </div>
-
-        <div class="tool-card is-planned" aria-disabled="true">
-          <span class="tool-head">
-            <span class="tool-name">Future Tool</span>
-            <span class="tool-status is-soon">Planned</span>
-          </span>
-          <span class="tool-desc">Coming Soon</span>
-        </div>
-
-        <div class="tool-card is-planned" aria-disabled="true">
-          <span class="tool-head">
-            <span class="tool-name">Future Tool</span>
-            <span class="tool-status is-soon">Planned</span>
-          </span>
-          <span class="tool-desc">Coming Soon</span>
-        </div>
-      </div>
+      <a class="game-tile" href="https://store.steampowered.com/app/3482370/Our_Dreadling/" target="_blank" rel="noopener">
+        <img src="mydread.jpg" alt="Our Dreadling on Steam" loading="lazy">
+        <span class="game-cta">
+          View on Steam
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
     </section>
   </main>
 
   <footer class="site-footer" id="contact">
     <div class="footer-inner">
       <p class="footer-tag">Let's talk</p>
-      <p> ethanwing [at] proton [dot] me</p>
+
       <div class="contact-row">
         <button class="icon-btn" type="button" id="email-btn" aria-label="Email Ethan">
           <img src="email-outline.svg" alt="">
@@ -342,9 +110,11 @@
         <noscript>
           <span class="text-link">ethanwing [at] proton [dot] me</span>
         </noscript>
+        <a class="icon-btn" href="https://github.com/EdoubleU" aria-label="Ethan's GitHub" target="_blank" rel="noopener">
+          <img src="github.svg" alt="">
+        </a>
         <a class="text-link" href="/blog.html">Blog</a>
-        <a class="text-link" href="/gallery.html">Photo Gallery</a>
-    
+        <a class="text-link" href="/gallery.html">Gallery</a>
       </div>
 
       <div class="support">
@@ -358,6 +128,32 @@
     </div>
   </footer>
 
-  <script src="email-protect.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const emailBtn = document.getElementById('email-btn');
+      if (!emailBtn) return;
+
+      const encoded = 'ZXRoYW53aW5nQHByb3Rvbi5tZQ==';
+
+      emailBtn.addEventListener('click', () => {
+        const address = atob(encoded);
+        window.location.href = `mailto:${address}`;
+      });
+    });
+  </script>
+  <script>
+    // After Netlify Identity processes the confirmation/invite token,
+    // redirect to /admin/ so the user lands in the CMS.
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function (user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function () {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
+
