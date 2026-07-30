@@ -3,8 +3,11 @@
 # is always regenerated from the current posts/*.md files.
 
 [build]
-  command   = "node build.js"
-  publish   = "."
+  command = "node build.js"
+  publish = "."
 
-# If you already have a netlify.toml with other settings,
-# just add the [build] block above — don't duplicate the file.
+# Allows Netlify's own managed edge functions (like ua_blocker_ef)
+# to resolve npm packages in the Deno edge runtime.
+# Without this, @netlify/blobs fails to bundle and the deploy errors.
+[build.environment]
+  DENO_UNSTABLE_NPM = "1"
