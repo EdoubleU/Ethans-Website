@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#14181F">
+<title>Admin — private</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .console{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 3.5rem) var(--gutter) 6rem;
+  }
+  .console h1{
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: clamp(1.7rem, 5vw, 2.3rem);
+    margin: 0 0 .4rem;
+  }
+  .console .lede{
+    color: var(--chalk-dim);
+    margin: 0 0 2rem;
+    font-size: .95rem;
+  }
+
+  /* ---- Tabs ---- */
+  .tabs{
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 1.75rem;
+  }
+  .tab-btn{
+    font-family: var(--font-mono);
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    padding: .6rem 1.1rem;
+    background: transparent;
+    border: none;
+    color: var(--chalk-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .tab-btn:hover{ color: var(--chalk); }
+  .tab-btn.active{ color: var(--amber); border-bottom-color: var(--amber); }
+  .tab-panel{ display: none; }
+  .tab-panel.active{ display: block; }
+
+  /* ---- Panels ---- */
+  .panel{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .panel h2{
+    font-family: var(--font-mono);
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--amber);
+    margin: 0 0 1rem;
+  }
+
+  /* ---- Form fields ---- */
+  .field{ margin-bottom: 1rem; }
+  .field:last-child{ margin-bottom: 0; }
+  .field label{
+    display: block;
+    font-family: var(--font-mono);
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--chalk-dim);
+    margin-bottom: .4rem;
+  }
+  .field input, .field textarea{
+    width: 100%;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: .65rem .8rem;
+    color: var(--chalk);
+    font-family: var(--font-body);
+    font-size: .95rem;
+  }
+  .field input:focus, .field textarea:focus{
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+  .field textarea{ min-height: 180px; resize: vertical; line-height: 1.6; }
+  .field .hint{
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--chalk-dim);
+    margin-top: .35rem;
+  }
+  .row{ display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 560px){ .row{ grid-template-columns: 1fr; } }
+
+  /* ---- Buttons ---- */
+  .btn-row{ display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+  .btn{ cursor: pointer; }
+  .btn[disabled]{ opacity: .5; cursor: not-allowed; }
+
+  /* ---- Status ---- */
+  .status{
+    font-family: var(--font-mono);
+    font-size: .85rem;
+    padding: .9rem 1rem;
+    border-radius: 8px;
+    margin-top: 1.25rem;
+    border: 1px solid var(--line);
+    white-space: pre-wrap;
+    display: none;
+  }
+  .status.show{ display: block; }
+  .status.ok{ border-color: var(--amber); color: var(--chalk); }
+  .status.err{ border-color: #c0405a; color: #ffb4c2; background: rgba(192,64,90,.08); }
+  .status.busy{ color: var(--chalk-dim); }
+
+  /* ---- Drop zone ---- */
+  .drop-zone{
+    border: 2px dashed var(--line);
+    border-radius: 12px;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .drop-zone:hover, .drop-zone.drag-over{
+    border-color: var(--amber);
+    background: var(--amber-soft);
+  }
+  .drop-zone input[type="file"]{
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+  .drop-zone svg{ color: var(--chalk-dim); margin-bottom: .75rem; display: block; margin-inline: auto; }
+  .drop-zone p{
+    font-family: var(--font-mono);
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--chalk-dim);
+    margin: 0;
+  }
+  .drop-zone p strong{ color: var(--amber); }
+
+  /* ---- Preview ---- */
+  .preview-wrap{
+    display: none;
+    margin-top: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .preview-wrap.show{ display: block; }
+  .preview-wrap img{
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+  .preview-clear{
+    position: absolute;
+    top: .5rem; right: .5rem;
+    background: rgba(20,24,31,.8);
+    border: 1px solid var(--line);
+    color: var(--chalk);
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+    transition: border-color .15s;
+  }
+  .preview-clear:hover{ border-color: var(--amber); }
+
+  /* ---- Photo list ---- */
+  .photo-list{ display: grid; gap: .5rem; margin-top: 1rem; }
+  .photo-item{
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .5rem .75rem;
+  }
+  .photo-item img{
+    width: 48px; height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .photo-item-info{ flex: 1; min-width: 0; }
+  .photo-item-name{
+    font-family: var(--font-mono);
+    font-size: .75rem;
+    color: var(--chalk);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .photo-item-caption{
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    color: var(--chalk-dim);
+    margin-top: .2rem;
+  }
+  .photo-item-delete{
+    background: none;
+    border: 1px solid var(--line);
+    color: #c0405a;
+    border-radius: 6px;
+    padding: .3rem .6rem;
+    font-family: var(--font-mono);
+    font-size: .7rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .15s ease;
+  }
+  .photo-item-delete:hover{ background: rgba(192,64,90,.15); border-color: #c0405a; }
+
+  /* ---- How-to disclosure ---- */
+  details.howto{ margin-bottom: 1.5rem; }
+  details.howto summary{
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--chalk-dim);
+    list-style: none;
+  }
+  details.howto summary::-webkit-details-marker{ display: none; }
+  details.howto ol{ color: var(--chalk-dim); line-height: 1.7; padding-left: 1.2rem; }
+  details.howto a{ color: var(--amber); }
+</style>
+</head>
+<body>
+  <main class="console" id="main">
+    <p class="eyebrow">ethanwing.me · unlisted, not linked anywhere</p>
+    <h1>Admin</h1>
+    <p class="lede">Publish blog posts and manage your photo gallery — all via your GitHub repo, nothing server-side.</p>
+
+    <!-- ---- Tab switcher ---- -->
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="tab-blog"   id="btn-blog">Blog Posts</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-photos" id="btn-photos">Photos</button>
+    </div>
+
+    <!-- ================================================================
+         TAB 1 — BLOG POSTS
+    ================================================================ -->
+    <div id="tab-blog" class="tab-panel active" role="tabpanel" aria-labelledby="btn-blog">
+
+      <details class="howto">
+        <summary>First time? How to get a GitHub token</summary>
+        <ol>
+          <li>Go to <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
+          <li>Under <strong>Repository access</strong>, choose your site's repo only.</li>
+          <li>Under <strong>Permissions → Contents</strong>, set <strong>Read and write</strong>.</li>
+          <li>Set an expiration (90 days is fine), generate it, and paste it below.</li>
+          <li>The token is never saved to disk — it lives in this tab's session only.</li>
+        </ol>
+      </details>
+
+      <div class="panel">
+        <h2>Repository</h2>
+        <div class="row">
+          <div class="field"><label for="b-owner">Owner</label><input id="b-owner" type="text" placeholder="e.g. EdoubleU" autocomplete="off"></div>
+          <div class="field"><label for="b-repo">Repository</label><input id="b-repo" type="text" placeholder="e.g. EdoubleU.github.io" autocomplete="off"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="b-branch">Branch</label><input id="b-branch" type="text" value="main" autocomplete="off"></div>
+          <div class="field"><label for="b-path">File path</label><input id="b-path" type="text" value="blog.html" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="b-token">Access token</label>
+          <input id="b-token" type="password" placeholder="github_pat_…" autocomplete="off">
+          <p class="hint">Session-only — gone when you close this tab.</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" type="button" id="b-save">Save settings</button>
+          <button class="btn btn-ghost" type="button" id="b-forget">Forget token</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>New post</h2>
+        <div class="field"><label for="b-title">Title</label><input id="b-title" type="text" placeholder="Post title"></div>
+        <div class="field"><label for="b-date">Date</label><input id="b-date" type="date"></div>
+        <div class="field">
+          <label for="b-body">Body</label>
+          <textarea id="b-body" placeholder="Write your post here. Leave a blank line between paragraphs."></textarea>
+          <p class="hint">Plain text — blank lines become new paragraphs.</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" type="button" id="b-publish">Publish post</button>
+        </div>
+        <div class="status" id="b-status"></div>
+      </div>
+
+    </div><!-- /tab-blog -->
+
+    <!-- ================================================================
+         TAB 2 — PHOTOS
+    ================================================================ -->
+    <div id="tab-photos" class="tab-panel" role="tabpanel" aria-labelledby="btn-photos">
+
+      <details class="howto">
+        <summary>How this works</summary>
+        <ol>
+          <li>Uses the same GitHub token as the Blog tab — save your repo settings there first.</li>
+          <li>Photos are stored in a <code>photos/</code> folder in your repo and served by GitHub Pages.</li>
+          <li>A <code>photos/manifest.json</code> file tracks filenames, captions, and dates — the gallery page reads it to build the grid.</li>
+          <li>Compress photos before uploading (aim for under 500KB) — smaller files load faster and keep your repo tidy.</li>
+          <li>Deleting a photo removes it from the gallery and from your repo.</li>
+        </ol>
+      </details>
+
+      <!-- Upload form -->
+      <div class="panel">
+        <h2>Upload a photo</h2>
+
+        <div class="field">
+          <label>Image file</label>
+          <div class="drop-zone" id="drop-zone">
+            <input type="file" id="p-file" accept="image/*" aria-label="Choose an image file">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+              <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p>Drop image here or <strong>click to browse</strong></p>
+          </div>
+          <div class="preview-wrap" id="p-preview-wrap">
+            <img id="p-preview" src="" alt="Preview">
+            <button class="preview-clear" id="p-clear" type="button" aria-label="Remove selected image">✕</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="p-caption">Caption <span style="opacity:.5;font-size:.85em">(optional)</span></label>
+          <input id="p-caption" type="text" placeholder="A short description of the photo">
+        </div>
+
+        <div class="field">
+          <label for="p-filename">Filename in repo</label>
+          <input id="p-filename" type="text" placeholder="e.g. sunset-2026.jpg" autocomplete="off">
+          <p class="hint">Auto-filled when you pick a file. Edit if you want a cleaner name. Use only letters, numbers, hyphens, underscores, and a file extension.</p>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" type="button" id="p-upload" disabled>Upload photo</button>
+        </div>
+        <div class="status" id="p-status"></div>
+      </div>
+
+      <!-- Photo list -->
+      <div class="panel">
+        <h2>Gallery photos</h2>
+        <p style="color:var(--chalk-dim);font-size:.9rem;margin:0 0 .75rem">Showing what's currently in your manifest.</p>
+        <button class="btn btn-ghost" type="button" id="p-refresh" style="margin-bottom:1rem">Refresh list</button>
+        <div id="p-photo-list">
+          <p style="color:var(--chalk-dim);font-family:var(--font-mono);font-size:.8rem;">Save your repo settings in the Blog tab, then click Refresh list.</p>
+        </div>
+        <div class="status" id="p-list-status"></div>
+      </div>
+
+    </div><!-- /tab-photos -->
+
+  </main>
+
+  <script>
+  (function () {
+    /* ============================================================
+       SHARED HELPERS
+    ============================================================ */
+    function $(id) { return document.getElementById(id); }
+
+    function ghHeaders(token, json) {
+      var h = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+
+    function b64Encode(str) { return btoa(unescape(encodeURIComponent(str))); }
+    function b64Decode(b64) { return decodeURIComponent(escape(atob(b64))); }
+
+    function arrayBufferToBase64(buf) {
+      var bytes = new Uint8Array(buf);
+      var binary = '';
+      for (var i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+      return btoa(binary);
+    }
+
+    function showStatus(el, kind, msg) {
+      el.className = 'status show ' + kind;
+      el.textContent = msg;
+    }
+
+    function getSettings() {
+      try { return JSON.parse(localStorage.getItem('adminSettings') || '{}'); } catch(e) { return {}; }
+    }
+
+    function getToken() { return sessionStorage.getItem('adminToken') || ''; }
+
+    function repoBase(s) {
+      return 'https://api.github.com/repos/' + s.owner + '/' + s.repo + '/contents/';
+    }
+
+    async function getFile(owner, repo, branch, path, token) {
+      var url = 'https://api.github.com/repos/' + owner + '/' + repo +
+                '/contents/' + path + '?ref=' + encodeURIComponent(branch);
+      var res = await fetch(url, { headers: ghHeaders(token, false) });
+      if (res.status === 404) return null;
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'GitHub error ' + res.status);
+      return { content: b64Decode(data.content.replace(/\n/g, '')), sha: data.sha };
+    }
+
+    async function putFile(owner, repo, branch, path, token, content64, sha, message) {
+      var body = { message: message, content: content64, branch: branch };
+      if (sha) body.sha = sha;
+      var res = await fetch(
+        'https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + path,
+        { method: 'PUT', headers: ghHeaders(token, true), body: JSON.stringify(body) }
+      );
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'GitHub error ' + res.status);
+      return data;
+    }
+
+    async function deleteFile(owner, repo, branch, path, token, sha, message) {
+      var res = await fetch(
+        'https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + path,
+        { method: 'DELETE', headers: ghHeaders(token, true),
+          body: JSON.stringify({ message: message, sha: sha, branch: branch }) }
+      );
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'GitHub error ' + res.status);
+    }
+
+    /* ============================================================
+       TABS
+    ============================================================ */
+    var tabBtns = document.querySelectorAll('.tab-btn');
+    var tabPanels = document.querySelectorAll('.tab-panel');
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        tabBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+        tabPanels.forEach(function (p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected','true');
+        document.getElementById(btn.getAttribute('aria-controls')).classList.add('active');
+      });
+    });
+
+    /* ============================================================
+       TAB 1 — BLOG POSTS
+    ============================================================ */
+    var bOwner  = $('b-owner');
+    var bRepo   = $('b-repo');
+    var bBranch = $('b-branch');
+    var bPath   = $('b-path');
+    var bToken  = $('b-token');
+    var bTitle  = $('b-title');
+    var bDate   = $('b-date');
+    var bBody   = $('b-body');
+    var bStatus = $('b-status');
+
+    // Restore
+    var s = getSettings();
+    if (s.owner)  bOwner.value  = s.owner;
+    if (s.repo)   bRepo.value   = s.repo;
+    if (s.branch) bBranch.value = s.branch;
+    if (s.path)   bPath.value   = s.path;
+    var tok = getToken();
+    if (tok) bToken.value = tok;
+    bDate.valueAsDate = new Date();
+
+    $('b-save').addEventListener('click', function () {
+      localStorage.setItem('adminSettings', JSON.stringify({
+        owner: bOwner.value.trim(), repo: bRepo.value.trim(),
+        branch: bBranch.value.trim() || 'main', path: bPath.value.trim() || 'blog.html'
+      }));
+      if (bToken.value.trim()) sessionStorage.setItem('adminToken', bToken.value.trim());
+      showStatus(bStatus, 'ok', 'Settings saved. Token kept for this session.');
+    });
+
+    $('b-forget').addEventListener('click', function () {
+      bToken.value = '';
+      sessionStorage.removeItem('adminToken');
+      showStatus(bStatus, 'ok', 'Token cleared.');
+    });
+
+    function escHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function slugify(title) {
+      return 'post-' + title.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') +
+             '-' + Date.now().toString(36);
+    }
+
+    function formatDate(iso) {
+      var p = iso.split('-');
+      return parseInt(p[1]) + '/' + parseInt(p[2]) + '/' + p[0];
+    }
+
+    function buildArticle(title, dateStr, paras) {
+      var paraHtml = paras.map(function(p){ return '<p>' + escHtml(p) + '</p>'; }).join('\n            ');
+      return '<article class="blog-post" id="' + slugify(title) + '">\n' +
+        '        <details open>\n          <summary>\n' +
+        '            <span class="post-title">' + escHtml(title) + '</span>\n' +
+        '            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+        '<path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>\n' +
+        '          </summary>\n          <p class="post-date">' + escHtml(dateStr) + '</p>\n' +
+        '          <div class="post-content">\n            ' + paraHtml + '\n          </div>\n' +
+        '        </details>\n      </article>';
+    }
+
+    var publishBtn = $('b-publish');
+    publishBtn.addEventListener('click', async function () {
+      var owner  = bOwner.value.trim();
+      var repo   = bRepo.value.trim();
+      var branch = bBranch.value.trim() || 'main';
+      var path   = bPath.value.trim() || 'blog.html';
+      var token  = bToken.value.trim() || getToken();
+      var title  = bTitle.value.trim();
+      var date   = bDate.value ? formatDate(bDate.value) : '';
+      var raw    = bBody.value.trim();
+
+      if (!owner || !repo || !token || !title || !raw) {
+        showStatus(bStatus, 'err', 'Missing required field: owner, repo, token, title, and body are all required.');
+        return;
+      }
+
+      var paras = raw.split(/\n\s*\n/).map(function(p){ return p.trim(); }).filter(Boolean);
+      publishBtn.disabled = true;
+
+      try {
+        showStatus(bStatus, 'busy', 'Fetching current blog.html…');
+        var file = await getFile(owner, repo, branch, path, token);
+        if (!file) throw new Error('blog.html not found — check the file path.');
+
+        showStatus(bStatus, 'busy', 'Inserting new post…');
+        var doc = new DOMParser().parseFromString(file.content, 'text/html');
+        var blogSection = doc.querySelector('section.blog');
+        if (!blogSection) throw new Error('Could not find <section class="blog"> in the file.');
+
+        var open = blogSection.querySelector('details[open]');
+        if (open) open.removeAttribute('open');
+
+        var temp = document.createElement('div');
+        temp.innerHTML = buildArticle(title, date, paras);
+        blogSection.insertBefore(doc.importNode(temp.firstElementChild, true), blogSection.firstElementChild);
+
+        var newHtml = '<!doctype html>\n' + doc.documentElement.outerHTML;
+
+        showStatus(bStatus, 'busy', 'Committing to ' + owner + '/' + repo + '…');
+        await putFile(owner, repo, branch, path, token, b64Encode(newHtml), file.sha, 'Add post: ' + title);
+
+        showStatus(bStatus, 'ok', 'Published! GitHub Pages usually redeploys within a minute.');
+        bTitle.value = '';
+        bBody.value  = '';
+      } catch (err) {
+        showStatus(bStatus, 'err', err.message || String(err));
+      } finally {
+        publishBtn.disabled = false;
+      }
+    });
+
+    /* ============================================================
+       TAB 2 — PHOTOS
+    ============================================================ */
+    var MANIFEST_PATH = 'photos/manifest.json';
+
+    var dropZone     = $('drop-zone');
+    var fileInput    = $('p-file');
+    var previewWrap  = $('p-preview-wrap');
+    var previewImg   = $('p-preview');
+    var clearBtn     = $('p-clear');
+    var captionInput = $('p-caption');
+    var filenameInput= $('p-filename');
+    var uploadBtn    = $('p-upload');
+    var pStatus      = $('p-status');
+    var photoList    = $('p-photo-list');
+    var listStatus   = $('p-list-status');
+
+    var selectedFile    = null;
+    var selectedBase64  = null;
+
+    function pickFile(file) {
+      if (!file || !file.type.startsWith('image/')) {
+        showStatus(pStatus, 'err', 'Please choose an image file (JPG, PNG, WebP, GIF, etc.).');
+        return;
+      }
+      selectedFile = file;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        previewImg.src = e.target.result;
+        previewWrap.classList.add('show');
+        // Strip data URI prefix to get raw base64
+        selectedBase64 = e.target.result.split(',')[1];
+        // Auto-generate filename
+        var safe = file.name.replace(/[^a-zA-Z0-9._-]/g, '-').replace(/-+/g, '-');
+        if (!filenameInput.value) filenameInput.value = safe;
+        uploadBtn.disabled = false;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    fileInput.addEventListener('change', function () {
+      if (this.files && this.files[0]) pickFile(this.files[0]);
+    });
+
+    // Drag and drop
+    dropZone.addEventListener('dragover', function (e) { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', function () { dropZone.classList.remove('drag-over'); });
+    dropZone.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      var file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) pickFile(file);
+    });
+
+    clearBtn.addEventListener('click', function () {
+      selectedFile = null;
+      selectedBase64 = null;
+      previewWrap.classList.remove('show');
+      previewImg.src = '';
+      fileInput.value = '';
+      filenameInput.value = '';
+      uploadBtn.disabled = true;
+      pStatus.className = 'status';
+    });
+
+    uploadBtn.addEventListener('click', async function () {
+      var s      = getSettings();
+      var token  = $('b-token').value.trim() || getToken();
+      var owner  = s.owner || '';
+      var repo   = s.repo  || '';
+      var branch = s.branch || 'main';
+
+      if (!owner || !repo || !token) {
+        showStatus(pStatus, 'err', 'Save your repo settings in the Blog tab first (owner, repo, and token).');
+        return;
+      }
+      if (!selectedBase64) {
+        showStatus(pStatus, 'err', 'No image selected.');
+        return;
+      }
+      var filename = filenameInput.value.trim();
+      if (!filename) {
+        showStatus(pStatus, 'err', 'Filename is required.');
+        return;
+      }
+      if (/[^a-zA-Z0-9._\-]/.test(filename)) {
+        showStatus(pStatus, 'err', 'Filename can only contain letters, numbers, hyphens, underscores, and a dot for the extension.');
+        return;
+      }
+      var caption  = captionInput.value.trim();
+      var today    = new Date().toISOString().slice(0, 10);
+      uploadBtn.disabled = true;
+
+      try {
+        // 1. Upload the image file
+        showStatus(pStatus, 'busy', 'Uploading image…');
+        var imgPath = 'photos/' + filename;
+        var existing = await getFile(owner, repo, branch, imgPath, token);
+        await putFile(owner, repo, branch, imgPath, token, selectedBase64,
+                      existing ? existing.sha : null, 'Add photo: ' + filename);
+
+        // 2. Fetch or create manifest
+        showStatus(pStatus, 'busy', 'Updating manifest…');
+        var mf = await getFile(owner, repo, branch, MANIFEST_PATH, token);
+        var manifest;
+        if (mf) {
+          try { manifest = JSON.parse(mf.content); } catch(e) { manifest = { photos: [] }; }
+        } else {
+          manifest = { photos: [] };
+        }
+        if (!Array.isArray(manifest.photos)) manifest.photos = [];
+
+        // Remove any existing entry with same filename (overwrite)
+        manifest.photos = manifest.photos.filter(function (p) { return p.filename !== filename; });
+        manifest.photos.push({ filename: filename, caption: caption, date: today });
+
+        var newJson = JSON.stringify(manifest, null, 2);
+        await putFile(owner, repo, branch, MANIFEST_PATH, token, b64Encode(newJson),
+                      mf ? mf.sha : null, 'Update manifest: add ' + filename);
+
+        showStatus(pStatus, 'ok', 'Uploaded! GitHub Pages redeploys in about a minute — then it\'ll appear in /gallery.html.');
+        // Reset form
+        clearBtn.click();
+        captionInput.value = '';
+        loadPhotoList();
+      } catch (err) {
+        showStatus(pStatus, 'err', err.message || String(err));
+      } finally {
+        uploadBtn.disabled = !selectedBase64;
+      }
+    });
+
+    // ---- Photo list ----
+    async function loadPhotoList() {
+      var s     = getSettings();
+      var token = $('b-token').value.trim() || getToken();
+      var owner = s.owner || '';
+      var repo  = s.repo  || '';
+      var branch= s.branch|| 'main';
+
+      if (!owner || !repo || !token) {
+        photoList.innerHTML = '<p style="color:var(--chalk-dim);font-family:var(--font-mono);font-size:.8rem;">Save your repo settings in the Blog tab first.</p>';
+        return;
+      }
+
+      photoList.innerHTML = '<p style="color:var(--chalk-dim);font-family:var(--font-mono);font-size:.8rem;">Loading…</p>';
+      listStatus.className = 'status';
+
+      try {
+        var mf = await getFile(owner, repo, branch, MANIFEST_PATH, token);
+        if (!mf) {
+          photoList.innerHTML = '<p style="color:var(--chalk-dim);font-family:var(--font-mono);font-size:.8rem;">No photos uploaded yet.</p>';
+          return;
+        }
+        var manifest = JSON.parse(mf.content);
+        var photos = (manifest.photos || []).slice().reverse();
+        if (!photos.length) {
+          photoList.innerHTML = '<p style="color:var(--chalk-dim);font-family:var(--font-mono);font-size:.8rem;">No photos uploaded yet.</p>';
+          return;
+        }
+        var list = document.createElement('div');
+        list.className = 'photo-list';
+        photos.forEach(function (photo) {
+          var item = document.createElement('div');
+          item.className = 'photo-item';
+          item.innerHTML =
+            '<img src="/photos/' + photo.filename + '" alt="">' +
+            '<div class="photo-item-info">' +
+              '<div class="photo-item-name">' + photo.filename + '</div>' +
+              '<div class="photo-item-caption">' + (photo.caption || '(no caption)') + ' · ' + (photo.date || '') + '</div>' +
+            '</div>' +
+            '<button class="photo-item-delete" type="button" data-file="' + photo.filename + '">Delete</button>';
+          list.appendChild(item);
+        });
+        photoList.innerHTML = '';
+        photoList.appendChild(list);
+
+        // Attach delete handlers
+        photoList.querySelectorAll('.photo-item-delete').forEach(function (btn) {
+          btn.addEventListener('click', async function () {
+            var fname = this.getAttribute('data-file');
+            if (!confirm('Delete "' + fname + '" from your gallery and repo? This cannot be undone.')) return;
+            btn.disabled = true;
+            try {
+              showStatus(listStatus, 'busy', 'Deleting ' + fname + '…');
+              // Delete image file
+              var imgFile = await getFile(owner, repo, branch, 'photos/' + fname, token);
+              if (imgFile) {
+                await deleteFile(owner, repo, branch, 'photos/' + fname, token, imgFile.sha, 'Delete photo: ' + fname);
+              }
+              // Update manifest
+              var mf2 = await getFile(owner, repo, branch, MANIFEST_PATH, token);
+              if (mf2) {
+                var m2 = JSON.parse(mf2.content);
+                m2.photos = (m2.photos || []).filter(function(p){ return p.filename !== fname; });
+                await putFile(owner, repo, branch, MANIFEST_PATH, token,
+                              b64Encode(JSON.stringify(m2, null, 2)), mf2.sha, 'Update manifest: remove ' + fname);
+              }
+              showStatus(listStatus, 'ok', fname + ' deleted. Gallery will update in about a minute.');
+              loadPhotoList();
+            } catch (err) {
+              showStatus(listStatus, 'err', err.message || String(err));
+              btn.disabled = false;
+            }
+          });
+        });
+      } catch (err) {
+        photoList.innerHTML = '<p style="color:#ffb4c2;font-family:var(--font-mono);font-size:.8rem;">' + (err.message || err) + '</p>';
+      }
+    }
+
+    $('p-refresh').addEventListener('click', loadPhotoList);
+
+  })();
+  </script>
+</body>
+</html>
