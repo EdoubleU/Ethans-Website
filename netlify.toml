@@ -1,0 +1,10 @@
+# Netlify build configuration
+# Runs node build.js before every deploy so posts/index.json
+# is always regenerated from the current posts/*.md files.
+
+[build]
+  command   = "node build.js"
+  publish   = "."
+
+# If you already have a netlify.toml with other settings,
+# just add the [build] block above — don't duplicate the file.

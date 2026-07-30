@@ -1,0 +1,82 @@
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create:   'Add {{collection}} "{{slug}}"'
+    update:   'Update {{collection}} "{{slug}}"'
+    delete:   'Delete {{collection}} "{{slug}}"'
+    uploadMedia: 'Upload photo "{{path}}"'
+    deleteMedia: 'Delete photo "{{path}}"'
+
+# Where uploaded images are stored in the repo
+media_folder: "photos"
+# URL path used to serve those images
+public_folder: "/photos"
+
+# Optional: shows posts as drafts before publishing
+# publish_mode: editorial_workflow
+
+collections:
+
+  # -------------------------------------------------------
+  # BLOG POSTS
+  # Each post is a Markdown file in the posts/ folder.
+  # Netlify runs build.js after every commit to regenerate
+  # posts/index.json, which blog.html fetches to render.
+  # -------------------------------------------------------
+  - name: "posts"
+    label: "Blog Posts"
+    label_singular: "Post"
+    folder: "posts"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    # Filename pattern: YYYY-MM-DD-post-title-slug.md
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: "Title",   name: "title", widget: "string" }
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        format: "M/D/YYYY"
+        date_format: "M/D/YYYY"
+        time_format: false
+        default: ""
+      - { label: "Body",    name: "body",  widget: "markdown" }
+
+  # -------------------------------------------------------
+  # GALLERY PHOTOS
+  # Manages photos/manifest.json as a structured list.
+  # Decap uploads images to photos/ via its media library;
+  # the stored filename field holds the full /photos/ path.
+  # -------------------------------------------------------
+  - name: "gallery"
+    label: "Gallery"
+    files:
+      - name: "photos"
+        label: "Gallery Photos"
+        file: "photos/manifest.json"
+        format: "json"
+        fields:
+          - name: "photos"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.caption}} ({{fields.date}})"
+            fields:
+              - label: "Image"
+                name: "filename"
+                widget: "image"
+                media_library:
+                  config:
+                    multiple: false
+              - { label: "Caption", name: "caption", widget: "string",   required: false, hint: "Short description shown in the gallery." }
+              - label: "Date"
+                name: "date"
+                widget: "datetime"
+                format: "YYYY-MM-DD"
+                date_format: "YYYY-MM-DD"
+                time_format: false
+                default: ""
