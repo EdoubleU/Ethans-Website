@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -18,6 +19,7 @@
     <a class="brand" href="https://ethanwing.me" aria-label="Back to home">EW</a>
     <nav aria-label="Primary">
       <a href="https://ethanwing.me">Home</a>
+      <a href="/gallery.html">Gallery</a>
     </nav>
   </header>
 
@@ -32,50 +34,8 @@
       <svg viewBox="0 0 240 32"><line x1="0" y1="16" x2="92" y2="16"/><circle cx="120" cy="16" r="10"/><line x1="148" y1="16" x2="240" y2="16"/></svg>
     </div>
 
-    <section class="blog">
-      <article class="blog-post" id="first-blog-post">
-        <details open>
-          <summary>
-            <span class="post-title">NBA Awards Should Reward Greatness, Not Attendance [A Possible Solution]</span>
-            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </summary>
-          <p class="post-date">1/7/2026</p>
-          <div class="post-content">
-            <p>The NBA's 65-game minimum feels less like a solution and more like a workaround that accidentally became policy. It was meant to rein in load management. What it's actually done is turn awards into a compliance exercise.</p>
-            <p>The issue isn't that availability shouldn't matter. It's that the league chose to treat it as a switch instead of a spectrum. Sixty-five games earns full consideration; sixty-four wipes out an entire body of work. That disconnect is obvious to anyone who's watched an MVP or DPOY race unfold in real time, because voters have never evaluated seasons that way. They already account for missed games... the rule just does it clumsily and all at once.</p>
-            <p>There's a cleaner fix. Give players a 10-game grace period, roughly the amount of time we've collectively accepted stars will miss in a normal season. After that, subtract 1 percent from a player's total voting points for every additional missed game. No disqualifications. No cliffs. No pretending that missing 14 games and missing 34 games are the same thing. Most outcomes wouldn't change. The conversations would. Fewer debates about eligibility. Fewer performative appearances. Fewer great seasons erased by bad timing. In fact, this change likely wouldn't alter any MVP result from the past decade. The only race it meaningfully tightens is 2022–23, when Joel Embiid played 66 games and Nikola Jokić played 69 and even then, the winner stays the same. That's the point.</p>
-            <p>The goal isn't to rewrite history. It's to stop forcing injured players onto the court while still discouraging excessive load management. Availability would still matter; it would just be priced honestly, instead of enforced like a checkbox.</p>
-          </div>
-        </details>
-      </article>
-
-      <!--
-      <article class="blog-post" id="second-blog-post">
-        <details>
-          <summary>
-            <span class="post-title">Second Blog Post</span>
-            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </summary>
-          <p class="post-date">Date</p>
-          <div class="post-content">
-            <p>This post starts collapsed.</p>
-          </div>
-        </details>
-      </article>
-
-      <article class="blog-post" id="third-blog-post">
-        <details>
-          <summary>
-            <span class="post-title">Third Blog Post</span>
-            <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </summary>
-          <p class="post-date">Date</p>
-          <div class="post-content">
-            <p>Another post.</p>
-          </div>
-        </details>
-      </article>
-      -->
+    <section class="blog" id="blog-root" aria-live="polite">
+      <p class="post-date" style="text-align:center;padding:2rem 0">Loading posts…</p>
     </section>
   </main>
 
@@ -83,20 +43,137 @@
     <div class="footer-inner">
       <p class="footer-tag">Let's talk</p>
       <div class="contact-row">
-        <a class="icon-btn" href="mailto:ethanwing20@gmail.com" aria-label="Email Ethan">
+        <button class="icon-btn" type="button" id="email-btn" aria-label="Email Ethan">
           <img src="/email-outline.svg" alt="">
-        </a>
+        </button>
         <a class="icon-btn" href="https://github.com/EdoubleU" aria-label="Ethan's GitHub" target="_blank" rel="noopener">
           <img src="/github.svg" alt="">
         </a>
-        <a class="text-link" href="https://ethanwing.me">Home</a>
         <a class="text-link" href="/gallery.html">Gallery</a>
       </div>
     </div>
   </footer>
 
-  <script src="/collapse.js"></script>
+  <script>
+  (function () {
+    /* Minimal Markdown to HTML - handles Decap rich-text output */
+    function mdToHtml(md) {
+      var paras = [];
+      var current = '';
+
+      function inline(s) {
+        s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        s = s.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+        s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        s = s.replace(/_([^_]+)_/g, '<em>$1</em>');
+        s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+        s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+        return s;
+      }
+
+      function flush() {
+        var t = current.trim();
+        if (!t) { current = ''; return; }
+        var h = t.match(/^(#{1,6})\s+(.*)/);
+        if (h) { paras.push('<h' + h[1].length + '>' + inline(h[2]) + '</h' + h[1].length + '>'); }
+        else    { paras.push('<p>' + inline(t) + '</p>'); }
+        current = '';
+      }
+
+      md.split(/\r?\n/).forEach(function (line) {
+        if (line.trim() === '') flush();
+        else current += (current ? ' ' : '') + line;
+      });
+      flush();
+      return paras.join('\n');
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    var root = document.getElementById('blog-root');
+
+    fetch('/posts/index.json?_=' + Date.now())
+      .then(function(r){ if(!r.ok) throw new Error(); return r.json(); })
+      .then(function(data){
+        var posts = data.posts || [];
+        if (!posts.length) {
+          root.innerHTML = '<p class="post-date" style="text-align:center;padding:2rem 0">No posts yet.</p>';
+          return;
+        }
+        root.innerHTML = posts.map(function(post, i){
+          return (
+            '<article class="blog-post" id="' + esc(post.slug) + '">\n' +
+            '  <details' + (i===0 ? ' open' : '') + '>\n' +
+            '    <summary>\n' +
+            '      <span class="post-title">' + esc(post.title) + '</span>\n' +
+            '      <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>\n' +
+            '    </summary>\n' +
+            (post.date ? '    <p class="post-date">' + esc(post.date) + '</p>\n' : '') +
+            '    <div class="post-content">\n' + mdToHtml(post.body||'') + '\n    </div>\n' +
+            '  </details>\n</article>'
+          );
+        }).join('\n');
+        animateDetails();
+      })
+      .catch(function(){
+        root.innerHTML = '<p class="post-date" style="text-align:center;padding:2rem 0;color:#c0405a">Could not load posts. Check that posts/index.json exists.</p>';
+      });
+
+    function animateDetails() {
+      var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('.blog-post details').forEach(function(det){
+        var sum = det.querySelector('summary');
+        var con = det.querySelector('.post-content');
+        var dte = det.querySelector('.post-date');
+        if (!sum || !con) return;
+        var anim=null, closing=false, expanding=false;
+        sum.addEventListener('click', function(e){
+          e.preventDefault();
+          det.style.overflow='hidden';
+          if (closing||!det.open) doOpen();
+          else if (expanding||det.open) doShrink();
+        });
+        function doShrink(){
+          closing=true;
+          if(anim) anim.cancel();
+          anim=det.animate({height:[det.offsetHeight+'px',sum.offsetHeight+'px']},{duration:rm?0:220,easing:'ease-out'});
+          anim.onfinish=function(){finish(false);};
+          anim.oncancel=function(){closing=false;};
+        }
+        function doOpen(){
+          det.style.height=det.offsetHeight+'px';
+          det.open=true;
+          requestAnimationFrame(doExpand);
+        }
+        function doExpand(){
+          expanding=true;
+          var end=(sum.offsetHeight+(dte?dte.offsetHeight:0)+con.offsetHeight)+'px';
+          if(anim) anim.cancel();
+          anim=det.animate({height:[det.offsetHeight+'px',end]},{duration:rm?0:220,easing:'ease-out'});
+          anim.onfinish=function(){finish(true);};
+          anim.oncancel=function(){expanding=false;};
+        }
+        function finish(open){
+          det.open=open; anim=null; closing=expanding=false;
+          det.style.height=det.style.overflow='';
+        }
+      });
+    }
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function(user){
+        if (!user) window.netlifyIdentity.on('login', function(){ document.location.href='/admin/'; });
+      });
+    }
+
+    var eb = document.getElementById('email-btn');
+    if (eb) eb.addEventListener('click', function(){ window.location.href='mailto:'+atob('ZXRoYW53aW5nQHByb3Rvbi5tZQ=='); });
+  })();
+  </script>
 </body>
 </html>
+
 
 
