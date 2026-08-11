@@ -26,4 +26,4 @@ Team that scores a bucket in 1v1, 2v2,3v3,4v4 and 5v5 wins.
 
 The speed and chaos created by the tranisitions between offense and defense forces communication, and quick help rotations.  Players get to work on individual 1v1 skill, but also team concepts. 
 
-[Ladder Basketball Drill](/photos/screenshot-2026-08-11-105258.png "Picture: 1 to 5 Ladder Basketball Drill")
+### **[Ladder Basketball Drill](/photos/screenshot-2026-08-11-105258.png "Picture: 1 to 5 Ladder Basketball Drill")**
