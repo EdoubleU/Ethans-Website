@@ -4,13 +4,15 @@ date: 8/11/2026
 ---
 **Setup:**
 
-2 teams of 5 setup on baseline or opposite sidelinesPlayers desigate themselves #1 through #5
+2 teams of 5 setup on baseline or opposite sidelines.
+
+Players desigate themselves #1 through #5.
 
 **Rules:**
 
 Players #1 for each team play 1v1
 
-If offensive(black in the image) player scores that team moves up to 2v2 and retains the ball (no checking up, ball is live when it clears the 3-point line
+If offensive(black in the image) player scores that team moves up to 2v2 and retains the ball (no checking up, ball is live when it clears the 3-point line.
 
  If the black team (which is now playing 2v2) turns the ball over,  it quickly turns back to 1v1 with the purple team now in possession. 
 
