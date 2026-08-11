@@ -1,5 +1,5 @@
 ---
-title: Basketball Drill of the Day
+title: "Basketball Drill of the Day: 1 to 5 Ladder (Live)"
 date: 8/11/2026
 ---
 **Setup:**
